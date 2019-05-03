@@ -430,9 +430,9 @@ function lab_migration_proposal_form_submit($form, &$form_state)
     $university = $v['university'];    
     $directory_name = _lm_dir_name($lab_title, $proposar_name, $university);
     $result = "INSERT INTO {lab_migration_proposal} 
-    (uid, approver_uid, name_title, name, contact_ph, department, university, city, pincode, state, country, version, lab_title, approval_status, solution_status, solution_provider_uid, solution_display, creation_date, approval_date, solution_date, solution_provider_name_title, solution_provider_name, solution_provider_contact_ph, solution_provider_department, solution_provider_university, directory_name) VALUES
+    (uid, approver_uid, name_title, name, contact_ph, department, university, city, pincode, state, country, r_version, lab_title, approval_status, solution_status, solution_provider_uid, solution_display, creation_date, approval_date, solution_date, solution_provider_name_title, solution_provider_name, solution_provider_contact_ph, solution_provider_department, solution_provider_university, directory_name) VALUES
     (:uid, :approver_uid, :name_title, :name, :contact_ph, :department, :university, :city, :pincode, :state, :country,
-     :version, :lab_title, :approval_status, :solution_status, :solution_provider_uid, :solution_display, :creation_date, 
+     :r_version, :lab_title, :approval_status, :solution_status, :solution_provider_uid, :solution_display, :creation_date, 
      :approval_date, :solution_date, :solution_provider_name_title, :solution_provider_name,
       :solution_provider_contact_ph, :solution_provider_department, :solution_provider_university, :directory_name)";
     $args = array(
@@ -447,7 +447,7 @@ function lab_migration_proposal_form_submit($form, &$form_state)
         ":pincode" => $v['pincode'],
         ":state" => $v['all_state'],
         ":country" => $v['country'],
-        ":version" => $form_state['values']['version'],
+        ":r_version" => $form_state['values']['version'],
         ":lab_title" => $v['lab_title'],
         ":approval_status" => 0,
         ":solution_status" => $solution_status,

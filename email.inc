@@ -49,9 +49,10 @@ function lab_migration_mail($key, &$message, $params)
             ));
             $message['body'] = array(
                 0 => t('
-Dear !user_name,
+Dear ' . $proposal_data->solution_provider_name . ',
 
-Your following Lab migration solution proposal has been approved:
+Congratulations! Your proposal for lab migration with the following details has been
+approved:
 
 Full Name : ' . $proposal_data->solution_provider_name_title . ' ' . $proposal_data->solution_provider_name . '
 Email : ' . $user_data->mail . '
@@ -67,8 +68,8 @@ Please ensure that ALL the codes follow guidelines at https://r.fossee.in/lab-mi
 
 Best Wishes,
 
-!site_name Team,
-FOSSEE,IIT Bombay', array(
+!site_name Team
+FOSSEE, IIT Bombay', array(
                     '!site_name' => variable_get('site_name', ''),
                     '!user_name' => $user_data->name
                 ), array(
@@ -192,9 +193,9 @@ FOSSEE,IIT Bombay', array(
             ));
             $message['body'] = array(
                 'body' => t('
-Dear !user_name,
+Dear ' . $proposal_data->name . ',
 
-We have received your Lab migration proposal with the following details:
+We have received your proposal for lab migration with the following details:
 
 Full Name : ' . $proposal_data->name_title . ' ' . $proposal_data->name . '
 Email : ' . $user_data->mail . '
@@ -209,12 +210,12 @@ Solution Provided By : ' . $solution_provider_user . '
 
 List of experiments : ' . $experiment_list . '
 
-Your proposal is under review. You will soon receive an email when same has been approved/disapproved.
+The proposal is under review. You will be notified of the decision.  
 
 Best Wishes,
 
-!site_name Team,
-FOSSEE,IIT Bombay', array(
+!site_name Team
+FOSSEE, IIT Bombay', array(
                     '!site_name' => variable_get('site_name', ''),
                     '!user_name' => $user_data->name
                 ), array(
@@ -283,9 +284,10 @@ FOSSEE,IIT Bombay', array(
             ));
             $message['body'] = array(
                 'body' => t('
-Dear !user_name,
+Dear ' . $proposal_data->name . ',
 
-We regret to inform you that all the Experiments of your Lab with following details have been dis-approved.
+We regret to inform you that your proposal for lab migration with the following
+details has been disapproved due to the following reason.
 
 Reason for disapproval: ' . $proposal_data->message . '
 
@@ -303,11 +305,12 @@ List of experiments : ' . $experiment_list . '
 
 Uploaded Sample Code : ' . $samplecodefilename . '
 
+Please try to re-submit it after incorporating the comments given above. Please note that the records for this proposal have been deleted so that you can submit the proposal again.
 
 Best Wishes,
 
-!site_name Team,
-FOSSEE,IIT Bombay', array(
+!site_name Team
+FOSSEE, IIT Bombay', array(
                     '!site_name' => variable_get('site_name', ''),
                     '!user_name' => $user_data->name
                 ), array(
@@ -465,7 +468,7 @@ FOSSEE,IIT Bombay', array(
                 'body' => t('
 Dear !user_name,
 
-Following Lab migration has been completed sucessfully :
+Following lab migration has been completed successfully:
 
 Full Name : ' . $proposal_data->name_title . ' ' . $proposal_data->name . '
 Email : ' . $user_data->mail . '
@@ -475,8 +478,7 @@ University/Institute : ' . $proposal_data->university . '
 City : ' . $proposal_data->city . '
 State : ' . $proposal_data->state . '
 
-
-Solution Provided By : ' . $solution_provider_user . '
+Solution for this lab has been provided by' . $solution_provider_user . '
 
 List of experiments : ' . $experiment_list . '
 
@@ -484,14 +486,10 @@ Your Lab solution is now available at following link to download.
 
 https://r.fossee.in/lab-migration/lab-migration-run/' . $proposal_data->id . '
 
-Now you should be able to propose a new Lab migration.
-
-Please ensure that ALL the codes follow guidelines at https://r.fossee.in/lab-migration-project/lab-migration-guidelines
-
 Best Wishes,
 
-!site_name Team,
-FOSSEE,IIT Bombay', array(
+!site_name Team
+FOSSEE, IIT Bombay', array(
                     '!site_name' => variable_get('site_name', ''),
                     '!user_name' => $user_data->name
                 ), array(
@@ -599,12 +597,12 @@ Experiment Title : ' . $experiment_data->title . '
 Solution number : ' . $solution_data->code_number . '
 Caption : ' . $solution_data->caption . '
 
-The solution is under review. You will be notified when it has been approved.
+The solution is under review. You will be notified of the decision. 
 
 Best Wishes,
 
-!site_name Team,
-FOSSEE,IIT Bombay', array(
+!site_name Team
+FOSSEE, IIT Bombay', array(
                     '!site_name' => variable_get('site_name', ''),
                     '!user_name' => $user_data->name
                 ), array(
@@ -711,8 +709,8 @@ Caption : ' . $params['solution_deleted_user']['solution_caption'] . '
 
 Best Wishes,
 
-!site_name Team,
-FOSSEE,IIT Bombay', array(
+!site_name Team
+FOSSEE, IIT Bombay', array(
                     '!site_name' => variable_get('site_name', ''),
                     '!user_name' => $user_data->name
                 ), array(

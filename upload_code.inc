@@ -649,5 +649,3 @@ function _list_of_dependency_files()
   }
   return array($dependency_files, $dependency_files_class,  $dependency_files_value);
 }
-
-

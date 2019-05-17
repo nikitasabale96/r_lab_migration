@@ -1390,49 +1390,7 @@ function lab_migration_category_edit_form_submit($form, &$form_state)
     drupal_set_message(t('Proposal Category Updated'), 'status');
     drupal_goto('lab-migration/manage-proposal/category');
   }
-function _lm_list_of_departments()
-  {
-    $department = array(
-        0 => '-Select-'
-    );
-    $query = db_select('list_of_departments');
-    $query->fields('list_of_departments');
-    $query->orderBy('id', 'DESC');
-    $department_list = $query->execute();
-    while ($department_list_data = $department_list->fetchObject())
-      {
-        $department[$department_list_data->department] = $department_list_data->department;
-      }
-    return $department;
-  }
-function _lm_list_of_states()
-  {
-    $states = array(
-        0 => '-Select-'
-    );
-    $query = db_select('list_states_of_india');
-    $query->fields('list_states_of_india');
-    //$query->orderBy('', '');
-    $states_list = $query->execute();
-    while ($states_list_data = $states_list->fetchObject())
-      {
-        $states[$states_list_data->state] = $states_list_data->state;
-      }
-    return $states;
-  }
-function _lm_list_of_cities()
-  {
-    $city = array();
-    $query = db_select('list_cities_of_india');
-    $query->fields('list_cities_of_india');
-    $query->orderBy('city', 'ASC');
-    $city_list = $query->execute();
-    while ($city_list_data = $city_list->fetchObject())
-      {
-        $city[$city_list_data->city] = $city_list_data->city;
-      }
-    return $city;
-  }
+
 function CreateReadmeFileLabMigration($proposal_id)
   {
     $result = db_query("

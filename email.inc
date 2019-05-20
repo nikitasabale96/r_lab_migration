@@ -286,8 +286,7 @@ FOSSEE, IIT Bombay', array(
                 'body' => t('
 Dear ' . $proposal_data->name . ',
 
-We regret to inform you that your proposal for lab migration with the following
-details has been disapproved due to the following reason.
+We regret to inform you that your proposal for lab migration with the following details has been disapproved due to the following reason.
 
 Reason for disapproval: ' . $proposal_data->message . '
 
@@ -478,11 +477,11 @@ University/Institute: ' . $proposal_data->university . '
 City: ' . $proposal_data->city . '
 State: ' . $proposal_data->state . '
 
-Solution for this lab has been provided by' . $solution_provider_user . '
+Solution for this lab has been provided by ' . $solution_provider_user . '
 
 List of experiments: ' . $experiment_list . '
 
-Your Lab solution is now available at following link to download.
+Your lab solution is now available at following link to download.
 
 https://r.fossee.in/lab-migration/lab-migration-run/' . $proposal_data->id . '
 

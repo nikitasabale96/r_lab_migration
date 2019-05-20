@@ -359,6 +359,7 @@ function lab_migration_code_approval_form_submit($form, &$form_state)
             $from = variable_get('lab_migration_from_email', '');
             $bcc = variable_get('lab_migration_emails', '');
             $cc = variable_get('lab_migration_cc_emails', '');
+            $param['solution_disapproved']['solution_id'] = $proposal_data->id;
             $param['solution_disapproved']['experiment_number'] = $experiment_data->number;
             $param['solution_disapproved']['experiment_title'] = $experiment_data->title;
             $param['solution_disapproved']['solution_number'] = $solution_data->code_number;

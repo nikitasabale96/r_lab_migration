@@ -434,9 +434,9 @@ Dear !user_name,
 
 Your all the uploaded solutions for the Lab with the below detail has been approved:
 
-Title of Lab :' . $user_info->lab_title . '
+Title of Lab:' . $user_info->lab_title . '
 
-List of experiments : ' . $experiment_list . '
+List of experiments: ' . $experiment_list . '
 
 Best Wishes,
 
@@ -471,7 +471,7 @@ FOSSEE,IIT Bombay', array(
 
 Dear !user_name,
 
-Your all the uploaded solutions for the Lab with Title : ' . $user_info->lab_title . ' have been marked as pending to be reviewed.
+Your all the uploaded solutions for the Lab with Title: ' . $user_info->lab_title . ' have been marked as pending to be reviewed.
  
 You will be able to see the solutions after they have been approved by one of our reviewers.
 
@@ -518,7 +518,7 @@ FOSSEE,IIT Bombay', array(
 
 Dear !user_name,
 
-Your all the uploaded solutions for the whole Lab with Title : ' . $user_info->lab_title . ' have been marked as dis-approved.
+Your all the uploaded solutions for the whole Lab with Title: ' . $user_info->lab_title . ' have been marked as dis-approved.
 
 Reason for dis-approval: ' . $form_state['values']['message'] . '
 
@@ -554,7 +554,7 @@ FOSSEE,IIT Bombay', array(
                 $experiment_list = '';
                 while ($experiment_data = $experiment_q->fetchObject())
                   {
-                    $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description :  ' . $experiment_data->description . '<br>';
+                    $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description:  ' . $experiment_data->description . '<br>';
                     $experiment_list .= ' ';
                     $experiment_list .= '</p>';
                   }
@@ -592,13 +592,13 @@ FOSSEE,IIT Bombay', array(
                         $res = rmdir($dir_path);
                         if (!$res)
                           {
-                            drupal_set_message(t("Cannot delete Lab directory : " . $dir_path . ". Please contact administrator."), 'error');
+                            drupal_set_message(t("Cannot delete Lab directory: " . $dir_path . ". Please contact administrator."), 'error');
                             return;
                           }
                       }
                     else
                       {
-                        drupal_set_message(t("Lab directory not present : " . $dir_path . ". Skipping deleting lab directory."), 'status');
+                        drupal_set_message(t("Lab directory not present: " . $dir_path . ". Skipping deleting lab directory."), 'status');
                       }
                     /* deleting full proposal */
                     //$proposal_q = db_query("SELECT * FROM {lab_migration_proposal} WHERE id = %d", $form_state['values']['lab']);
@@ -625,9 +625,9 @@ Dear !user_name,
 
 We regret to inform you that all the uploaded Experiments of your Lab with following details have been deleted permanently.
 
-Title of Lab :' . $user_info->lab_title . '
+Title of Lab:' . $user_info->lab_title . '
 
-List of experiments : ' . $experiment_list . '
+List of experiments: ' . $experiment_list . '
 
 Reason for dis-approval: ' . $form_state['values']['message'] . '
 
@@ -678,8 +678,8 @@ Dear !user_name,
 
 Your Experiment for R Lab Migration with the following details is approved.
 
-Experiment name : ' . $experiment_value->title . '
-Caption : ' . $solution_value->caption . '
+Experiment name: ' . $experiment_value->title . '
+Caption: ' . $solution_value->caption . '
 
 Best Wishes,
 
@@ -722,8 +722,8 @@ Dear !user_name,
 
 Your all the uploaded solutions for the experiment have been marked as pending to be reviewed.
 
-Experiment name : ' . $experiment_value->title . '
-Caption : ' . $solution_value->caption . '
+Experiment name: ' . $experiment_value->title . '
+Caption: ' . $solution_value->caption . '
 
 Best Wishes,
 
@@ -781,8 +781,8 @@ Dear !user_name,
 
 We regret to inform you that your experiment with the following details under R Lab Migration is disapproved and has been deleted.
 
-Experiment name : ' . $experiment_value->title . '
-Caption : ' . $solution_value->caption . '
+Experiment name: ' . $experiment_value->title . '
+Caption: ' . $solution_value->caption . '
 
 Reason for dis-approval: ' . $form_state['values']['message'] . '
 
@@ -834,8 +834,8 @@ Dear !user_name,
 
 Your Experiment for R Lab Migration with the following details is approved.
 
-Experiment name : ' . $experiment_value->title . '
-Caption : ' . $solution_value->caption . '
+Experiment name: ' . $experiment_value->title . '
+Caption: ' . $solution_value->caption . '
 
 Best Wishes,
 
@@ -878,8 +878,8 @@ Dear !user_name,
 
 Your all the uploaded solutions for the experiment have been marked as pending to be reviewed.
 
-Experiment name : ' . $experiment_value->title . '
-Caption : ' . $solution_value->caption . '
+Experiment name: ' . $experiment_value->title . '
+Caption: ' . $solution_value->caption . '
 
 Best Wishes,
 
@@ -932,8 +932,8 @@ Dear !user_name,
 
 We regret to inform you that your experiment with the following details under R Lab Migration is disapproved and has been deleted.
 
-Experiment name : ' . $experiment_value->title . '
-Caption : ' . $solution_value->caption . '
+Experiment name: ' . $experiment_value->title . '
+Caption: ' . $solution_value->caption . '
 
 Reason for dis-approval: ' . $form_state['values']['message'] . '
 

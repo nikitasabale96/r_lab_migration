@@ -203,7 +203,7 @@ function lab_migration_upload_code_form($form,$form_state)
   );
   $form['r_version'] = array(
     '#type' => 'select',
-    '#title' => t('r version used'),
+    '#title' => t('R version used'),
     '#options' => _lm_list_of_software_version(),
     '#required' => TRUE,
   );
@@ -229,7 +229,7 @@ function lab_migration_upload_code_form($form,$form_state)
       '#title' => t('Upload main or source file'),
       '#size' => 48,
       '#description' => t('Only alphabets and numbers are allowed as a valid filename.') . '<br />' .
-      t('Allowed file extensions : ') . variable_get('lab_migration_source_extensions', ''),
+      t('Allowed file extensions: ') . variable_get('lab_migration_source_extensions', ''),
   );
 
  /* $form['dep_files'] = array(
@@ -290,14 +290,14 @@ function lab_migration_upload_code_form($form,$form_state)
       '#title' => t('Upload result file'),
       '#size' => 48,
       '#description' => t('Separate filenames with underscore. No spaces or any special characters allowed in filename.') . '<br />' .
-      t('Allowed file extensions : ') . variable_get('lab_migration_result_extensions', ''),
+      t('Allowed file extensions: ') . variable_get('lab_migration_result_extensions', ''),
   );
   $form['result']['result2'] = array(
       '#type' => 'file',
       '#title' => t('Upload result file'),
       '#size' => 48,
       '#description' => t('Separate filenames with underscore. No spaces or any special characters allowed in filename.') . '<br />' .
-      t('Allowed file extensions : ') . variable_get('lab_migration_result_extensions', ''),
+      t('Allowed file extensions: ') . variable_get('lab_migration_result_extensions', ''),
   );
 
   $form['xcos'] = array(
@@ -311,14 +311,14 @@ function lab_migration_upload_code_form($form,$form_state)
       '#title' => t('Upload xcos file'),
       '#size' => 48,
       '#description' => t('Separate filenames with underscore. No spaces or any special characters allowed in filename.') . '<br />' .
-      t('Allowed file extensions : ') . variable_get('lab_migration_xcos_extensions', ''),
+      t('Allowed file extensions: ') . variable_get('lab_migration_xcos_extensions', ''),
   );
   $form['xcos']['xcos2'] = array(
       '#type' => 'file',
       '#title' => t('Upload xcos file'),
       '#size' => 48,
       '#description' => t('Separate filenames with underscore. No spaces or any special characters allowed in filename.') . '<br />' .
-      t('Allowed file extensions : ') . variable_get('lab_migration_xcos_extensions', ''),
+      t('Allowed file extensions: ') . variable_get('lab_migration_xcos_extensions', ''),
   );
 */
   $form['submit'] = array(
@@ -345,7 +345,7 @@ function lab_migration_upload_code_form_validate($form, &$form_state)
     form_set_error('os_used', t('Please select the operating system used.'));
 
   if(!$form_state['values']['r_version'])
-    form_set_error('r_version', t('Please select the r version used.'));
+    form_set_error('r_version', t('Please select the R version used.'));
 
   if (isset($_FILES['files']))
   {
@@ -575,7 +575,7 @@ function lab_migration_upload_code_form_submit($form, &$form_state) {
         db_query($query,$args);
         drupal_set_message($file_name . ' uploaded successfully.', 'status');
       } else {
-        drupal_set_message('Error uploading file : ' . $dest_path . $file_name, 'error');
+        drupal_set_message('Error uploading file: ' . $dest_path . $file_name, 'error');
       }
     }
   }

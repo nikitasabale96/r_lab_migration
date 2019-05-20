@@ -73,7 +73,7 @@ function lab_migration_upload_code_delete()
     $from = variable_get('lab_migration_from_email', '');
     $bcc= variable_get('lab_migration_emails', '');
     $cc=variable_get('lab_migration_cc_emails', '');  
-
+    $param['solution_deleted_user']['solution_id'] = $proposal_data->id;
     $param['solution_deleted_user']['lab_title'] = $proposal_data->lab_title;
     $param['solution_deleted_user']['experiment_title'] = $experiment_data->title;
     $param['solution_deleted_user']['solution_number'] = $solution_data->code_number;

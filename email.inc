@@ -36,7 +36,7 @@ function lab_migration_mail($key, &$message, $params)
       	';
             while ($experiment_data = $experiment_q->fetchObject())
               {
-                $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description : ' . $experiment_data->description . '<br>';
+                $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description: ' . $experiment_data->description . '<br>';
                 $experiment_list .= ' ';
                 $experiment_list .= '</p>';
               }
@@ -54,15 +54,15 @@ Dear ' . $proposal_data->solution_provider_name . ',
 Congratulations! Your proposal for lab migration with the following details has been
 approved:
 
-Full Name : ' . $proposal_data->solution_provider_name_title . ' ' . $proposal_data->solution_provider_name . '
-Email : ' . $user_data->mail . '
-Contact No. : ' . $proposal_data->solution_provider_contact_ph . '
-Department/Branch : ' . $proposal_data->solution_provider_department . '
-University/Institute : ' . $proposal_data->solution_provider_university . '
-City : ' . $proposal_data->solution_provider_city . '
-State : ' . $proposal_data->solution_provider_state . '
+Full Name: ' . $proposal_data->solution_provider_name_title . ' ' . $proposal_data->solution_provider_name . '
+Email: ' . $user_data->mail . '
+Contact No.: ' . $proposal_data->solution_provider_contact_ph . '
+Department/Branch: ' . $proposal_data->solution_provider_department . '
+University/Institute: ' . $proposal_data->solution_provider_university . '
+City: ' . $proposal_data->solution_provider_city . '
+State: ' . $proposal_data->solution_provider_state . '
 
-List of experiments : ' . $experiment_list . '
+List of experiments: ' . $experiment_list . '
 
 Please ensure that ALL the codes follow guidelines at https://r.fossee.in/lab-migration/lab-migration-guidelines
 
@@ -96,7 +96,7 @@ FOSSEE, IIT Bombay', array(
       	';
             while ($experiment_data = $experiment_q->fetchObject())
               {
-                $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description : ' . $experiment_data->description . '<br>';
+                $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description: ' . $experiment_data->description . '<br>';
                 $experiment_list .= ' ';
                 $experiment_list .= '</p>';
               }
@@ -108,13 +108,13 @@ FOSSEE, IIT Bombay', array(
             ));
             $message['body'] = array(
                 'body' => t('
-Dear !user_name,
+Dear ' . $proposal_data->name . ',
 
 We regret to inform you that your Lab migration solution proposal has been disapproved.
 
-Title of Lab :' . $proposal_data->lab_title . '
+Title of Lab:' . $proposal_data->lab_title . '
 
-List of experiments : ' . $experiment_list . '
+List of experiments: ' . $experiment_list . '
 
 Reason: ' . $params['solution_proposal_disapproved']['message'] . '
 
@@ -122,8 +122,8 @@ You are welcome to submit a new proposal.
 
 Best Wishes,
 
-!site_name Team,
-FOSSEE,IIT Bombay', array(
+!site_name Team
+FOSSEE, IIT Bombay', array(
                     '!site_name' => variable_get('site_name', ''),
                     '!user_name' => $user_data->name
                 ), array(
@@ -180,7 +180,7 @@ FOSSEE,IIT Bombay', array(
       	';
             while ($experiment_data = $experiment_q->fetchObject())
               {
-                $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description : ' . $experiment_data->description . '<br>';
+                $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description: ' . $experiment_data->description . '<br>';
                 $experiment_list .= ' ';
                 $experiment_list .= '</p>';
               }
@@ -197,18 +197,18 @@ Dear ' . $proposal_data->name . ',
 
 We have received your proposal for lab migration with the following details:
 
-Full Name : ' . $proposal_data->name_title . ' ' . $proposal_data->name . '
-Email : ' . $user_data->mail . '
-Contact No. : ' . $proposal_data->contact_ph . '
-Department/Branch : ' . $proposal_data->department . '
-University/Institute : ' . $proposal_data->university . '
-City : ' . $proposal_data->city . '
-State : ' . $proposal_data->state . '
+Full Name: ' . $proposal_data->name_title . ' ' . $proposal_data->name . '
+Email: ' . $user_data->mail . '
+Contact No.: ' . $proposal_data->contact_ph . '
+Department/Branch: ' . $proposal_data->department . '
+University/Institute: ' . $proposal_data->university . '
+City: ' . $proposal_data->city . '
+State: ' . $proposal_data->state . '
 
 
-Solution Provided By : ' . $solution_provider_user . '
+Solution Provided By: ' . $solution_provider_user . '
 
-List of experiments : ' . $experiment_list . '
+List of experiments: ' . $experiment_list . '
 
 The proposal is under review. You will be notified of the decision.  
 
@@ -271,7 +271,7 @@ FOSSEE, IIT Bombay', array(
       	';
             while ($experiment_data = $experiment_q->fetchObject())
               {
-                $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description : ' . $experiment_data->description . '<br>';
+                $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description: ' . $experiment_data->description . '<br>';
                 $experiment_list .= ' ';
                 $experiment_list .= '</p>';
               }
@@ -291,19 +291,19 @@ details has been disapproved due to the following reason.
 
 Reason for disapproval: ' . $proposal_data->message . '
 
-Full Name : ' . $proposal_data->name_title . ' ' . $proposal_data->name . '
-Email : ' . $user_data->mail . '
-Contact No. : ' . $proposal_data->contact_ph . '
-Department/Branch : ' . $proposal_data->department . '
-University/Institute : ' . $proposal_data->university . '
-City : ' . $proposal_data->city . '
-State : ' . $proposal_data->state . '
+Full Name: ' . $proposal_data->name_title . ' ' . $proposal_data->name . '
+Email: ' . $user_data->mail . '
+Contact No.: ' . $proposal_data->contact_ph . '
+Department/Branch: ' . $proposal_data->department . '
+University/Institute: ' . $proposal_data->university . '
+City: ' . $proposal_data->city . '
+State: ' . $proposal_data->state . '
 
-Solution Provided By : ' . $solution_provider_user . '
+Solution Provided By: ' . $solution_provider_user . '
 
-List of experiments : ' . $experiment_list . '
+List of experiments: ' . $experiment_list . '
 
-Uploaded Sample Code : ' . $samplecodefilename . '
+Uploaded Sample Code: ' . $samplecodefilename . '
 
 Please try to re-submit it after incorporating the comments given above. Please note that the records for this proposal have been deleted so that you can submit the proposal again.
 
@@ -366,7 +366,7 @@ FOSSEE, IIT Bombay', array(
       	';
             while ($experiment_data = $experiment_q->fetchObject())
               {
-                $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description : ' . $experiment_data->description . '<br>';
+                $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description: ' . $experiment_data->description . '<br>';
                 $experiment_list .= ' ';
                 $experiment_list .= '</p>';
               }
@@ -379,30 +379,30 @@ FOSSEE, IIT Bombay', array(
             ));
             $message['body'] = array(
                 0 => t('
-Dear !user_name,
+Dear ' . $proposal_data->name . ',
 
 Congratulations! Your Lab migration proposal with the below details has been approved:
 
-Full Name : ' . $proposal_data->name_title . ' ' . $proposal_data->name . '
-Email : ' . $user_data->mail . '
-Contact No. : ' . $proposal_data->contact_ph . '
-Department/Branch : ' . $proposal_data->department . '
-University/Institute : ' . $proposal_data->university . '
-City : ' . $proposal_data->city . '
-State : ' . $proposal_data->state . '
+Full Name: ' . $proposal_data->name_title . ' ' . $proposal_data->name . '
+Email: ' . $user_data->mail . '
+Contact No.: ' . $proposal_data->contact_ph . '
+Department/Branch: ' . $proposal_data->department . '
+University/Institute: ' . $proposal_data->university . '
+City: ' . $proposal_data->city . '
+State: ' . $proposal_data->state . '
 
 
-Solution Provided By : ' . $solution_provider_user . '
+Solution Provided By: ' . $solution_provider_user . '
 
-List of experiments : ' . $experiment_list . '
+List of experiments: ' . $experiment_list . '
 
 Please ensure that ALL the guidelines for coding are strictly followed:
-https://r.fossee.in/lab-migration-project/lab-migration-guidelines
+https://r.fossee.in/lab-migration/lab-migration-guidelines
 
 Best Wishes,
 
-!site_name Team,
-FOSSEE,IIT Bombay', array(
+!site_name Team
+FOSSEE, IIT Bombay', array(
                     '!site_name' => variable_get('site_name', ''),
                     '!user_name' => $user_data->name
                 ), array(
@@ -453,7 +453,7 @@ FOSSEE,IIT Bombay', array(
       	';
             while ($experiment_data = $experiment_q->fetchObject())
               {
-                $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description : ' . $experiment_data->description . '<br>';
+                $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description: ' . $experiment_data->description . '<br>';
                 $experiment_list .= ' ';
                 $experiment_list .= '</p>';
               }
@@ -466,21 +466,21 @@ FOSSEE,IIT Bombay', array(
             ));
             $message['body'] = array(
                 'body' => t('
-Dear !user_name,
+Dear ' . $proposal_data->name . ',
 
 Following lab migration has been completed successfully:
 
-Full Name : ' . $proposal_data->name_title . ' ' . $proposal_data->name . '
-Email : ' . $user_data->mail . '
-Contact No. : ' . $proposal_data->contact_ph . '
-Department/Branch : ' . $proposal_data->department . '
-University/Institute : ' . $proposal_data->university . '
-City : ' . $proposal_data->city . '
-State : ' . $proposal_data->state . '
+Full Name: ' . $proposal_data->name_title . ' ' . $proposal_data->name . '
+Email: ' . $user_data->mail . '
+Contact No.: ' . $proposal_data->contact_ph . '
+Department/Branch: ' . $proposal_data->department . '
+University/Institute: ' . $proposal_data->university . '
+City: ' . $proposal_data->city . '
+State: ' . $proposal_data->state . '
 
 Solution for this lab has been provided by' . $solution_provider_user . '
 
-List of experiments : ' . $experiment_list . '
+List of experiments: ' . $experiment_list . '
 
 Your Lab solution is now available at following link to download.
 
@@ -524,7 +524,7 @@ FOSSEE, IIT Bombay', array(
       	';
             while ($experiment_data = $experiment_q->fetchObject())
               {
-                $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description : ' . $experiment_data->description . '<br>';
+                $experiment_list .= '<p>' . $experiment_data->number . ') ' . $experiment_data->title . '<br> Description: ' . $experiment_data->description . '<br>';
                 $experiment_list .= ' ';
                 $experiment_list .= '</p>';
               }
@@ -537,22 +537,22 @@ FOSSEE, IIT Bombay', array(
             ));
             $message['body'] = array(
                 'body' => t('
-Dear !user_name,
+Dear ' . $proposal_data->solution_provider_name . ',
 
 We have received your proposal for providing solution for lab migration with the following details:
 
-List of experiments : ' . $experiment_list . '
+List of experiments: ' . $experiment_list . '
 
-Full Name : ' . $proposal_data->solution_provider_name_title . ' ' . $proposal_data->solution_provider_name . '
-Email : ' . $user->mail . '
-Contact No. : ' . $proposal_data->solution_provider_contact_ph . '
-Department/Branch : ' . $proposal_data->department . '
-University/Institute : ' . $proposal_data->solution_provider_university . '
+Full Name: ' . $proposal_data->solution_provider_name_title . ' ' . $proposal_data->solution_provider_name . '
+Email: ' . $user->mail . '
+Contact No.: ' . $proposal_data->solution_provider_contact_ph . '
+Department/Branch: ' . $proposal_data->department . '
+University/Institute: ' . $proposal_data->solution_provider_university . '
 
 
 Your proposal is under review. You will soon receive an email when the same has been approved / disapproved.
 
-Please ensure that ALL the codes follow guidelines at https://r.fossee.in/lab-migration-project/lab-migration-guidelines
+Please ensure that ALL the codes follow guidelines at https://r.fossee.in/lab-migration/lab-migration-guidelines
 
 Best Wishes,
 
@@ -567,6 +567,7 @@ FOSSEE,IIT Bombay', array(
             break;
         case 'solution_uploaded':
             // $solution_q = db_query("SELECT * FROM {lab_migration_solution} WHERE id = %d LIMIT 1", $params['solution_uploaded']['solution_id']);
+            
             $query = db_select('lab_migration_solution');
             $query->fields('lab_migration_solution');
             $query->condition('id', $params['solution_uploaded']['solution_id']);
@@ -579,6 +580,12 @@ FOSSEE,IIT Bombay', array(
             $query->range(0, 1);
             $experiment_q = $query->execute();
             $experiment_data = $experiment_q->fetchObject();
+            $query = db_select('lab_migration_proposal');
+            $query->fields('lab_migration_proposal');
+            $query->condition('id', $experiment_data->proposal_id);
+            $query->range(0, 1);
+            $proposal_q = $query->execute();
+            $proposal_data = $proposal_q->fetchObject();
             $user_data = user_load($params['solution_uploaded']['user_id']);
             $message['subject'] = t('[!site_name] You have uploaded Lab migration solution', array(
                 '!site_name' => variable_get('site_name', '')
@@ -588,14 +595,14 @@ FOSSEE,IIT Bombay', array(
             $message['headers'] = $params['solution_uploaded']['headers'];
             $message['body'] = array(
                 'body' => t('
-Dear !user_name,
+Dear ' . $proposal_data->solution_provider_name . ',
 
 You have uploaded the following solution:
 
-Experiment Title : ' . $experiment_data->title . '
+Experiment Title: ' . $experiment_data->title . '
 
-Solution number : ' . $solution_data->code_number . '
-Caption : ' . $solution_data->caption . '
+Solution number: ' . $solution_data->code_number . '
+Caption: ' . $solution_data->caption . '
 
 The solution is under review. You will be notified of the decision. 
 
@@ -624,6 +631,12 @@ FOSSEE, IIT Bombay', array(
             $query->range(0, 1);
             $experiment_q = $query->execute();
             $experiment_data = $experiment_q->fetchObject();
+            $query = db_select('lab_migration_proposal');
+            $query->fields('lab_migration_proposal');
+            $query->condition('id', $experiment_data->proposal_id);
+            $query->range(0, 1);
+            $proposal_q = $query->execute();
+            $proposal_data = $proposal_q->fetchObject();
             $user_data = user_load($params['solution_approved']['user_id']);
             $message['headers'] = $params['solution_approved']['headers'];
             $message['subject'] = t('[!site_name] Your uploaded Lab migration solution has been approved', array(
@@ -633,21 +646,21 @@ FOSSEE, IIT Bombay', array(
             ));
             $message['body'] = array(
                 'body' => t('
-Dear !user_name,
+Dear ' . $proposal_data->solution_provider_name . ',
 
 Your following solution has been approved:
 
-Experiment Title : ' . $experiment_data->title . '
+Experiment Title: ' . $experiment_data->title . '
 
-Solution number : ' . $solution_data->code_number . '
-Caption : ' . $solution_data->caption . '
+Solution number: ' . $solution_data->code_number . '
+Caption: ' . $solution_data->caption . '
 
-Please ensure that ALL the codes follow guidelines at https://r.fossee.in/lab-migration-project/lab-migration-guidelines
+Please ensure that ALL the codes follow guidelines at https://r.fossee.in/lab-migration/lab-migration-guidelines
 
 Best Wishes,
 
-!site_name Team,
-FOSSEE,IIT Bombay', array(
+!site_name Team
+FOSSEE, IIT Bombay', array(
                     '!site_name' => variable_get('site_name', ''),
                     '!user_name' => $user_data->name
                 ), array(
@@ -656,6 +669,12 @@ FOSSEE,IIT Bombay', array(
             );
             break;
         case 'solution_disapproved':
+            $query = db_select('lab_migration_proposal');
+            $query->fields('lab_migration_proposal');
+            $query->condition('id', $params['solution_disapproved']['solution_id']);
+            $query->range(0, 1);
+            $proposal_q = $query->execute();
+            $proposal_data = $proposal_q->fetchObject();
             $user_data = user_load($params['solution_disapproved']['user_id']);
             $message['headers'] = $params['solution_disapproved']['headers'];
             $message['subject'] = t('[!site_name] Your uploaded Lab migration solution has been disapproved', array(
@@ -665,20 +684,20 @@ FOSSEE,IIT Bombay', array(
             ));
             $message['body'] = array(
                 'body' => t('
-Dear !user_name,
+Dear ' . $proposal_data->solution_provider_name . ',
 
 Your following solution has been disapproved:
 
-Solution number : ' . $params['solution_disapproved']['solution_number'] . '
-Caption : ' . $params['solution_disapproved']['solution_caption'] . '
+Solution number: ' . $params['solution_disapproved']['solution_number'] . '
+Caption: ' . $params['solution_disapproved']['solution_caption'] . '
 
-Reason for dis-approval : ' . $params['solution_disapproved']['message'] . '
+Reason for dis-approval: ' . $params['solution_disapproved']['message'] . '
 
 
 Best Wishes,
 
-!site_name Team,
-FOSSEE,IIT Bombay', array(
+!site_name Team
+FOSSEE, IIT Bombay', array(
                     '!site_name' => variable_get('site_name', ''),
                     '!user_name' => $user_data->name
                 ), array(
@@ -687,6 +706,12 @@ FOSSEE,IIT Bombay', array(
             );
             break;
         case 'solution_deleted_user':
+            $query = db_select('lab_migration_proposal');
+            $query->fields('lab_migration_proposal');
+            $query->condition('id', $params['solution_deleted_user']['solution_id']);
+            $query->range(0, 1);
+            $proposal_q = $query->execute();
+            $proposal_data = $proposal_q->fetchObject();
             $user_data = user_load($params['solution_deleted_user']['user_id']);
             $message['headers'] = $params['solution_deleted_user']['headers'];
             $message['subject'] = t('[!site_name] User has deleted pending Lab migration solution', array(
@@ -696,15 +721,15 @@ FOSSEE,IIT Bombay', array(
             ));
             $message['body'] = array(
                 'body' => t('
-Dear !user_name,
+Dear ' . $proposal_data->solution_provider_name . ',
 
-Your following pending solution has been deleted :
+Your following pending solution has been deleted:
 
-Title of the Lab : ' . $params['solution_deleted_user']['lab_title'] . '
-Title of the Experiment : ' . $params['solution_deleted_user']['experiment_title'] . '
+Title of the Lab: ' . $params['solution_deleted_user']['lab_title'] . '
+Title of the Experiment: ' . $params['solution_deleted_user']['experiment_title'] . '
 
-Solution number : ' . $params['solution_deleted_user']['solution_number'] . '
-Caption : ' . $params['solution_deleted_user']['solution_caption'] . '
+Solution number: ' . $params['solution_deleted_user']['solution_number'] . '
+Caption: ' . $params['solution_deleted_user']['solution_caption'] . '
 
 
 Best Wishes,
@@ -731,10 +756,10 @@ FOSSEE, IIT Bombay', array(
                 'body' => t('
 Dear !user_name,
 
-You have uploaded following dependency files :
+You have uploaded following dependency files:
     ' . $dependency_files . '
 
-Please ensure that ALL the codes follow guidelines at https://r.fossee.in/lab-migration-project/lab-migration-guidelines
+Please ensure that ALL the codes follow guidelines at https://r.fossee.in/lab-migration/lab-migration-guidelines
 
 Best Wishes,
 

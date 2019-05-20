@@ -621,7 +621,7 @@ FOSSEE,IIT Bombay', array(
                     $email_body = array(
                         0 => t('
 
-Dear !user_name,
+Dear ' . $proposal_data->name . ',
 
 We regret to inform you that all the uploaded Experiments of your Lab with following details have been deleted permanently.
 
@@ -633,8 +633,8 @@ Reason for dis-approval: ' . $form_state['values']['message'] . '
 
 Best Wishes,
 
-!site_name Team,
-FOSSEE,IIT Bombay', array(
+!site_name Team
+FOSSEE, IIT Bombay', array(
                             '!site_name' => variable_get('site_name', ''),
                             '!user_name' => $user_data->name
                         ))

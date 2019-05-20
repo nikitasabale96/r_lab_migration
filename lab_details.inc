@@ -10,7 +10,7 @@ function lab_migration_completed_labs_all()
     //$result = db_query($query);
     if ($result->rowCount() == 0)
       {
-        $output .= "We will in process to update lab migration data";
+        $output .= "We are in the process of updating the lab migration data. ";
       }
     else
       {
@@ -51,7 +51,7 @@ function lab_migration_labs_progress_all()
     $result = $query->execute();
     if ($result->rowCount() == 0)
       {
-        $page_content .= "We will in process to update lab migration data";
+        $page_content .= "We are in the process of updating the lab migration data. ";
       }
     else
       {

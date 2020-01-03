@@ -120,13 +120,13 @@ function lab_migration_run_form($form, &$form_state)
         '#markup' => '<div id="ajax_selected_lab_pdf">'. l('Download PDF of Lab Solutions', 'lab-migration/generate-lab/' . $lab_default_value . '/1') .'</div>',
         
         );*/
-        if ($lab_default_value == '2')
+        /*if ($lab_default_value == '2')
           {
             $form['selected_lab_r'] = array(
                 '#type' => 'item',
                 '#markup' => '<div id="ajax_selected_lab_r">' . l('Download Lab Solutions (r Version)', 'lab-migration-uploads/r_Version.zip') . '</div>'
             );
-          }
+          }*/
         $form['lab_details'] = array(
             '#type' => 'item',
             '#markup' => '<div id="ajax_lab_details">' . _lab_details($lab_default_value) . '</div>'
@@ -223,10 +223,10 @@ function ajax_experiment_list_callback($form, $form_state)
         if ($lab_details->solution_provider_uid > 0)
           {
             $commands[] = ajax_command_html('#ajax_selected_lab', l('Download Lab Solutions', 'lab-migration/download/lab/' . $lab_default_value));
-            if ($lab_default_value == '2')
+            /*if ($lab_default_value == '2')
               {
                 $commands[] = ajax_command_html('#ajax_selected_lab_r', l('Download Lab Solutions (r Version)', 'lab-migration_uploads/r_Version.zip'));
-              }
+              }*/
             /* $commands[] = ajax_command_html('#ajax_selected_lab_pdf', l('Download PDF of Lab Solutions', 'lab-migration/generate-lab/' . $lab_default_value . '/1'));*/
           }
         else

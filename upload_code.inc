@@ -567,7 +567,7 @@ function lab_migration_upload_code_form_submit($form, &$form_state) {
                     ":solution_id" => $solution_id,
                     ":filename" => $_FILES['files']['name'][$file_form_name],
                     ":filepath" => $file_path . $_FILES['files']['name'][$file_form_name],
-                    ":filemime" => 'application/dwxml',
+                    ":filemime" => mime_content_type($root_path . $dest_path . $_FILES['files']['name'][$file_form_name]),
                     ":filesize" => $_FILES['files']['size'][$file_form_name],
                     ":filetype" => $file_type,
                     ":timestamp" => time()

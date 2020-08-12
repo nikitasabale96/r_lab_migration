@@ -15,6 +15,7 @@ function lab_migration_download_solution_file()
     header('Content-Type: ' . $solution_file_data->filemime);
     header('Content-disposition: attachment; filename="' . str_replace(' ', '_', ($solution_file_data->filename)) . '"');
     header('Content-Length: ' . filesize($root_path . $solution_file_data->directory_name . '/' . $solution_file_data->filepath));
+    ob_clean();
     readfile($root_path . $solution_file_data->directory_name . '/' . $solution_file_data->filepath);
   }
 function lab_migration_download_dependency_file()
@@ -31,6 +32,7 @@ function lab_migration_download_dependency_file()
     header('Content-Type: ' . $dependency_file_data->filemime);
     header('Content-disposition: attachment; filename="' . str_replace(' ', '_', ($dependency_file_data->filename)) . '"');
     header('Content-Length: ' . filesize($root_path . $dependency_file_data->filepath));
+    ob_clean();
     readfile($root_path . $dependency_file_data->filepath);
   }
 function lab_migration_download_solution()

@@ -187,7 +187,7 @@ function lab_migration_proposal_form($form, &$form_state)
         '#title' => t('Pincode'),
         '#size' => 30,
         '#maxlength' => 6,
-        '#required' => False,
+        '#required' => TRUE,
         '#attributes' => array(
             'placeholder' => 'Enter pincode....'
         )
@@ -212,7 +212,7 @@ function lab_migration_proposal_form($form, &$form_state)
         '#states' => array(
             'visible' => array(
                 ':input[name="version"]' => array(
-                    'value' => 'olderversion'
+                    'value' => 'Others'
                 )
             )
         )
@@ -220,7 +220,7 @@ function lab_migration_proposal_form($form, &$form_state)
     $form['lab_title'] = array(
         '#type' => 'textfield',
         '#title' => t('Title of the Lab'),
-        '#size' => 50,
+        '#size' => 100,
         '#required' => TRUE
     );
     $first_experiemnt = TRUE;
@@ -231,7 +231,7 @@ function lab_migration_proposal_form($form, &$form_state)
             $form['lab_experiment-' . $counter] = array(
                 '#type' => 'textfield',
                 '#title' => t('Title of the Experiment ') . $counter,
-                '#size' => 50,
+                '#size' => 100,
                 '#required' => TRUE
             );
             $namefield = "lab_experiment-" . $counter;
@@ -258,7 +258,7 @@ function lab_migration_proposal_form($form, &$form_state)
             $form['lab_experiment-' . $counter] = array(
                 '#type' => 'textfield',
                 '#title' => t('Title of the Experiment ') . $counter,
-                '#size' => 50,
+                '#size' => 100,
                 '#required' => FALSE
             );
             $namefield = "lab_experiment-" . $counter;

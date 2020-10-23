@@ -860,8 +860,8 @@ function lab_migration_proposal_edit_form($form, $form_state)
     $form['lab_title'] = array(
         '#type' => 'textfield',
         '#title' => t('Title of the Lab'),
-        '#size' => 30,
-        '#maxlength' => 50,
+        '#size' => 100,
+        '#maxlength' => 255,
         '#required' => TRUE,
         '#default_value' => $proposal_data->lab_title
     );
@@ -902,7 +902,7 @@ function lab_migration_proposal_edit_form($form, $form_state)
             $form['lab_experiment_update' . $experiment_data->id] = array(
                 '#type' => 'textfield',
                 '#title' => t('Title of the Experiment ') . $counter,
-                '#size' => 50,
+                '#size' => 100,
                 '#default_value' => $experiment_title
             );
             $namefield = "lab_experiment_update" . $experiment_data->id;
@@ -920,7 +920,7 @@ function lab_migration_proposal_edit_form($form, $form_state)
             $form['lab_experiment_insert' . $counter] = array(
                 '#type' => 'textfield',
                 '#title' => t('Title of the Experiment ') . $counter,
-                '#size' => 50,
+                '#size' => 100,
                 '#required' => FALSE,
                 '#default_value' => $experiment_title
             );

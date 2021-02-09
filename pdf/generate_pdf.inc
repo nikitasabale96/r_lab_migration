@@ -27,7 +27,7 @@ function generate_lm_pdf()
 							} //!$pdf
 						$pdf->AddPage();
 						$image_bg = $mpath . "/pdf/images/bg.png";
-						$pdf->Image($image_bg, 0, 0, $pdf->w, $pdf->h);
+						$pdf->Image($image_bg, 0, 0, $pdf->GetPageWidth(), $pdf->GetPageHeight());
 						$pdf->Rect(5, 5, 267, 207, 'D'); //For A4
 						$pdf->SetMargins(18, 1, 18);
 						$pdf->Line(7.0, 7.0, 270.0, 7.0);
@@ -191,7 +191,7 @@ function generate_lm_pdf()
 							} //!$pdf
 						$pdf->AddPage();
 						$image_bg = $mpath . "/pdf/images/bg.png";
-						$pdf->Image($image_bg, 0, 0, $pdf->w, $pdf->h);
+						$pdf->Image($image_bg, 0, 0, $pdf->GetPageWidth(), $pdf->GetPageHeight());
 						$pdf->Rect(5, 5, 267, 207, 'D'); //For A4
 						$pdf->SetMargins(18, 1, 18);
 						$pdf->Line(7.0, 7.0, 270.0, 7.0);

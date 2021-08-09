@@ -248,6 +248,11 @@ function lab_migration_proposal_approval_form($form, $form_state)
         '#markup' => $proposal_data->city,
         '#title' => t('City')
     );
+    $form['district'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->district,
+        '#title' => t('District')
+    );
     $form['pincode'] = array(
         '#type' => 'item',
         '#markup' => $proposal_data->pincode,
@@ -498,6 +503,31 @@ function lab_migration_proposal_status_form($form, $form_state)
         '#type' => 'item',
         '#markup' => $proposal_data->university,
         '#title' => t('University/Institute')
+    );
+    $form['country'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->country,
+        '#title' => t('Country')
+    );
+    $form['all_state'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->state,
+        '#title' => t('State')
+    );
+    $form['city'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->city,
+        '#title' => t('City')
+    );
+    $form['district'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->district,
+        '#title' => t('District')
+    );
+    $form['pincode'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->pincode,
+        '#title' => t('Pincode/Postal code')
     );
     $form['lab_title'] = array(
         '#type' => 'item',
@@ -767,19 +797,19 @@ function lab_migration_proposal_edit_form($form, $form_state)
             'India' => 'India',
             'Others' => 'Others'
         ),
-        '#default_value' => $proposal_data->country,
         '#required' => TRUE,
         '#tree' => TRUE,
-        '#validated' => TRUE
+        '#validated' => TRUE,
+        '#default_value' => $proposal_data->country
     );
     $form['other_country'] = array(
         '#type' => 'textfield',
         '#title' => t('Other than India'),
         '#size' => 100,
-        '#default_value' => $proposal_data->country,
         '#attributes' => array(
             'placeholder' => t('Enter your country name')
         ),
+        '#default_value' => $proposal_data->country,
         '#states' => array(
             'visible' => array(
                 ':input[name="country"]' => array(
@@ -823,9 +853,22 @@ function lab_migration_proposal_edit_form($form, $form_state)
     $form['all_state'] = array(
         '#type' => 'select',
         '#title' => t('State'),
-        '#options' => _lm_list_of_states(),
-        '#default_value' => $proposal_data->state,
+        '#options' => _lab_migration_list_of_states(),
         '#validated' => TRUE,
+        '#default_value' => $proposal_data->state,
+        '#states' => array(
+            'visible' => array(
+                ':input[name="country"]' => array(
+                    'value' => 'India'
+                )
+            )
+        )
+    );
+    $form['district'] = array(
+        '#type' => 'select',
+        '#title' => t('District'),
+        '#options' => _lab_migration_list_of_district(),
+        '#default_value' => $proposal_data->district,
         '#states' => array(
             'visible' => array(
                 ':input[name="country"]' => array(
@@ -837,7 +880,7 @@ function lab_migration_proposal_edit_form($form, $form_state)
     $form['city'] = array(
         '#type' => 'select',
         '#title' => t('City'),
-        '#options' => _lm_list_of_cities(),
+        '#options' => _lab_migration_list_of_cities(),
         '#default_value' => $proposal_data->city,
         '#states' => array(
             'visible' => array(
@@ -847,16 +890,19 @@ function lab_migration_proposal_edit_form($form, $form_state)
             )
         )
     );
+    
     $form['pincode'] = array(
         '#type' => 'textfield',
         '#title' => t('Pincode'),
         '#size' => 30,
         '#maxlength' => 6,
         '#default_value' => $proposal_data->pincode,
+        '#required' => False,
         '#attributes' => array(
-            'placeholder' => 'Insert pincode of your city/ village....'
+            'placeholder' => 'Enter pincode....'
         )
-    );
+    );  
+
     $form['lab_title'] = array(
         '#type' => 'textfield',
         '#title' => t('Title of the Lab'),
@@ -1129,6 +1175,7 @@ function lab_migration_proposal_edit_form_submit($form, &$form_state)
         'department' => $v['department'],
         'university' => $v['university'],
         'city' => $v['city'],
+        'district' => $v['district'],
         'pincode' => $v['pincode'],
         'state' => $v['all_state'],
         'lab_title' => $v['lab_title'],

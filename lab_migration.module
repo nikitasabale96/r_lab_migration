@@ -569,6 +569,16 @@ function lab_migration_menu()
                 ),
                 'file' => 'pdf/verify_lab_migration_certificates.inc'
         );
+        $items['download/syllabus_copy_file'] = array(
+        'title' => 'Syllabus Copy Download',
+        'description' => 'Syllabus Copy Download',
+        'page callback' => 'lab_migration_download_syllabus_copy',
+        'access arguments' => array(
+            'lab migration bulk manage code'
+        ),
+        'type' => MENU_CALLBACK,
+        'file' => 'download.inc'
+    );
     return $items;
   }
 /**

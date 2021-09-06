@@ -279,6 +279,22 @@ function lab_migration_proposal_form($form, &$form_state)
             )
         )
     );
+
+    $form['syllabus_copy'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('<span class="form-required form-item" title="This field is required.">Syllabus copy (PDF) Files *</span>'),
+        '#collapsible' => FALSE,
+        '#collapsed' => FALSE
+    );
+    $form['syllabus_copy']['syllabus_copy_file'] = array(
+        '#type' => 'file',
+        '#title' => t('Upload pdf file'),
+        '#size' => 48,
+        '#description' => t('Separate filenames with underscore. No spaces or any special characters allowed in filename.') .
+                '<br />' . t('<span style="color:red;">Allowed file extensions : ') .
+                            variable_get('lab_migration_syllabus_file_extensions', '') . '</span>'
+    );
+
     $form['lab_title'] = array(
         '#type' => 'textfield',
         '#title' => t('Title of the Lab'),
@@ -445,6 +461,44 @@ function lab_migration_proposal_form_validate($form, &$form_state)
             form_set_error('older', t('Please provide valid version'));
           }
       }
+
+    if (isset($_FILES['files']))
+    {
+        /* check if atleast one source or result file is uploaded */
+        if (!($_FILES['files']['name']['syllabus_copy_file']))
+            form_set_error('syllabus_copy_file', t('Please upload pdf file.'));
+        /* check for valid filename extensions */
+        foreach ($_FILES['files']['name'] as $file_form_name => $file_name)
+        {
+            if ($file_name)
+            {
+                /* checking file type */
+                if (strstr($file_form_name, 'syllabus'))
+                    $file_type = 'S';
+                else
+                    $file_type = 'U';
+                $allowed_extensions_str = '';
+                switch ($file_type)
+                {
+                    case 'S':
+                        $allowed_extensions_str = variable_get('lab_migration_syllabus_file_extensions', '');
+                        break;
+                } //$file_type
+                $allowed_extensions = explode(',', $allowed_extensions_str);
+                $allowd_file = strtolower($_FILES['files']['name'][$file_form_name]);
+                $allowd_files = explode('.', $allowd_file);
+                $temp_extension = end($allowd_files);
+                if (!in_array($temp_extension, $allowed_extensions))
+                    form_set_error($file_form_name, t('Only file with ' . $allowed_extensions_str . ' extensions can be uploaded.'));
+                if ($_FILES['files']['size'][$file_form_name] <= 0)
+                    form_set_error($file_form_name, t('File size cannot be zero.'));
+                /* check if valid file name */
+                if (!lab_migration_check_valid_filename($_FILES['files']['name'][$file_form_name]))
+                    form_set_error($file_form_name, t('Invalid file name specified. Only alphabets and numbers are allowed as a valid filename.'));
+            } //$file_name
+        } //$_FILES['files']['name'] as $file_form_name => $file_name
+    } //isset($_FILES['files'])
+
     return;
   }
 function lab_migration_proposal_form_submit($form, &$form_state)
@@ -462,6 +516,7 @@ function lab_migration_proposal_form_submit($form, &$form_state)
     $solution_provider_contact_ph = '';
     $solution_provider_department = '';
     $solution_provider_university = '';
+    $syllabus_copy_file_path = '';
     if ($form_state['values']['solution_provider_uid'] == "1")
       {
         $solution_provider_uid = $user->uid;
@@ -492,11 +547,11 @@ function lab_migration_proposal_form_submit($form, &$form_state)
     $university = $v['university'];    
     $directory_name = _lm_dir_name($lab_title, $proposar_name, $university);
     $result = "INSERT INTO {lab_migration_proposal} 
-    (uid, approver_uid, name_title, name, contact_ph, department, university, city, district, pincode, state, country, r_version, lab_title, approval_status, solution_status, solution_provider_uid, solution_display, creation_date, approval_date, solution_date, solution_provider_name_title, solution_provider_name, solution_provider_contact_ph, solution_provider_department, solution_provider_university, directory_name) VALUES
+    (uid, approver_uid, name_title, name, contact_ph, department, university, city, district, pincode, state, country, r_version, lab_title, approval_status, solution_status, solution_provider_uid, solution_display, creation_date, approval_date, solution_date, solution_provider_name_title, solution_provider_name, solution_provider_contact_ph, solution_provider_department, solution_provider_university, directory_name,syllabus_copy_file_path) VALUES
     (:uid, :approver_uid, :name_title, :name, :contact_ph, :department, :university, :city, :district, :pincode, :state, :country,
      :r_version, :lab_title, :approval_status, :solution_status, :solution_provider_uid, :solution_display, :creation_date, 
      :approval_date, :solution_date, :solution_provider_name_title, :solution_provider_name,
-      :solution_provider_contact_ph, :solution_provider_department, :solution_provider_university, :directory_name)";
+      :solution_provider_contact_ph, :solution_provider_department, :solution_provider_university, :directory_name,:syllabus_copy_file_path)";
     $args = array(
         ":uid" => $user->uid,
         ":approver_uid" => 0,
@@ -524,11 +579,47 @@ function lab_migration_proposal_form_submit($form, &$form_state)
         ":solution_provider_contact_ph" => $solution_provider_contact_ph,
         ":solution_provider_department" => $solution_provider_department,
         ":solution_provider_university" => $solution_provider_university,
-        ":directory_name" => $directory_name
+        ":directory_name" => $directory_name,
+        ":syllabus_copy_file_path" => "",
     );
     $proposal_id = db_query($result, $args, array(
         'return' => Database::RETURN_INSERT_ID
     ));
+    $root_path = lab_migration_path();
+    $dest_path = $proposal_id . '/';
+    if (!is_dir($root_path . $dest_path))
+        mkdir($root_path . $dest_path);
+    /* uploading files */
+    foreach ($_FILES['files']['name'] as $file_form_name => $file_name)
+    {
+        if ($file_name)
+        {
+            /* checking file type */
+            $file_type = 'S';
+            if (file_exists($root_path . $dest_path . $_FILES['files']['name'][$file_form_name]))
+            {
+                drupal_set_message(t("Error uploading file. File !filename already exists.", array(
+                    '!filename' => $_FILES['files']['name'][$file_form_name]
+                )), 'error');
+                return;
+            } //file_exists($root_path . $dest_path . $_FILES['files']['name'][$file_form_name])
+            /* uploading file */
+            if (move_uploaded_file($_FILES['files']['tmp_name'][$file_form_name], $root_path . $dest_path . $_FILES['files']['name'][$file_form_name]))
+            {
+                $query = "UPDATE {lab_migration_proposal} SET syllabus_copy_file_path = :syllabus_copy_file_path WHERE id = :id";
+                $args = array(
+                    ":syllabus_copy_file_path" => $dest_path . $_FILES['files']['name'][$file_form_name],
+                    ":id" => $proposal_id
+                );
+                $updateresult = db_query($query, $args);
+                drupal_set_message($file_name . ' uploaded successfully.', 'status');
+            } //move_uploaded_file($_FILES['files']['tmp_name'][$file_form_name], $root_path . $dest_path . $_FILES['files']['name'][$file_form_name])
+            else
+            {
+                drupal_set_message('Error uploading file : ' . $dest_path . '/' . $file_name, 'error');
+            }
+        } //$file_name
+    } //$_FILES['files']['name'] as $file_form_name => $file_name
     if (!$proposal_id)
       {
         drupal_set_message(t('Error receiving your proposal. Please try again.'), 'error');

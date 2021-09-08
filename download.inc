@@ -283,7 +283,7 @@ function lab_migration_download_lab()
   }
 function lab_migration_download_syllabus_copy()
 {
-  $proposal_id = arg(2);
+  $proposal_id = (int)arg(3);
   $root_path = lab_migration_path();
   $query = db_select('lab_migration_proposal');
   $query->fields('lab_migration_proposal');

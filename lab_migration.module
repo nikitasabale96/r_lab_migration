@@ -569,7 +569,7 @@ function lab_migration_menu()
                 ),
                 'file' => 'pdf/verify_lab_migration_certificates.inc'
         );
-        $items['download/syllabus_copy_file'] = array(
+        $items['lab-migration/download/syllabus-copy-file'] = array(
         'title' => 'Syllabus Copy Download',
         'description' => 'Syllabus Copy Download',
         'page callback' => 'lab_migration_download_syllabus_copy',

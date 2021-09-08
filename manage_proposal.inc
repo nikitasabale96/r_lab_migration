@@ -280,7 +280,7 @@ function lab_migration_proposal_approval_form($form, $form_state)
     {
         $form['syllabus_copy_file_path'] = array(
             '#type' => 'markup',
-            '#markup' => l('Click here to download uploaded syllabus copy', 'download/syllabus_copy_file/' . $proposal_id) . "<br><br>"
+            '#markup' => l('Click here to download uploaded syllabus copy', 'lab-migration/download/syllabus-copy-file/' . $proposal_id) . "<br><br>"
         );
     } //$row->samplefilepath != "None"
     if ($proposal_data->solution_provider_uid == 0)

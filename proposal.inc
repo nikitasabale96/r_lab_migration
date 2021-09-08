@@ -117,12 +117,6 @@ function lab_migration_proposal_form($form, &$form_state)
             'India' => 'India',
             'Others' => 'Others'
         ),
-        //'#default_value' => 'India',
-        '#prefix' => '<div id="ajax-country-list-replace">',
-        '#suffix' => '</div>',
-        // '#ajax' => array(
-        //  'callback' => 'ajax_get_lm_district_list_callback',
-        //  ),
         '#required' => TRUE,
         '#tree' => TRUE,
         '#validated' => TRUE
@@ -174,17 +168,8 @@ function lab_migration_proposal_form($form, &$form_state)
     );
     $form['all_state'] = array(
         '#type' => 'select',
-        '#title' => t('State/UT'),
-        '#options' => _lab_migration_list_of_states(),
-        //'#empty_value' => '0',
-        //'#empty_option' => '- Select -',
-        '#default_value' => '0',
-        '#prefix' => '<div id="ajax-state-list-replace">',
-        '#suffix' => '</div>',
-        '#required' => TRUE,
-        '#ajax' => array(
-            'callback' => 'ajax_get_lm_district_list_callback',
-            ),
+        '#title' => t('State'),
+        '#options' => _lm_list_of_states(),
         '#validated' => TRUE,
         '#states' => array(
             'visible' => array(
@@ -194,64 +179,26 @@ function lab_migration_proposal_form($form, &$form_state)
             )
         )
     );
-    $form['district'] = array(
-        '#type' => 'select',
-        '#title' => t('District/Area'),
-        '#options' => _lab_migration_list_of_district($selected_state),
-        //'#empty_value' => '0',
-        //'#empty_option' => '- Select -',
-        '#prefix' => '<div id="ajax-district-list-replace">',
-        '#suffix' => '</div>',
-        '#validated' => TRUE,
-        '#required' => TRUE,
-        '#ajax' => array(
-            'callback' => 'ajax_get_lm_city_list_callback',
-            ),
-        '#states' => array(
-            'visible' => array(
-                ':input[name="all_state"]' => array(
-                    'value' => 'India'
-                )
-            )
-        )
-    );
     $form['city'] = array(
         '#type' => 'select',
-        '#title' => t('City/Area'),
-        '#options' => _lab_migration_list_of_cities($selected_state, $selected_district),
-        //'#empty_value' => '0',
-        //'#empty_option' => '- Select -',
-        '#prefix' => '<div id="ajax-city-list-replace">',
-        '#suffix' => '</div>',
-        '#validated' => TRUE,
-        '#required' => TRUE,
-        '#ajax' => array(
-            'callback' => 'ajax_get_lm_city_pincode_list_callback',
-            ),
+        '#title' => t('City'),
+        '#options' => _lm_list_of_cities(),
         '#states' => array(
             'visible' => array(
-                ':input[name="district"]' => array(
+                ':input[name="country"]' => array(
                     'value' => 'India'
                 )
             )
         )
     );
     $form['pincode'] = array(
-        '#type' => 'select',
+        '#type' => 'textfield',
         '#title' => t('Pincode'),
-        '#options' => _lab_migration_list_of_city_pincode($selected_city, $selected_state, $selected_district),
-        '#prefix' => '<div id="ajax-pincode-list-replace">',
-        '#suffix' => '</div>',
-        //'#empty_value' => '0',
-        //'#empty_option' => '- Select -',
+        '#size' => 30,
+        '#maxlength' => 6,
         '#required' => TRUE,
-        '#validated' => TRUE,
-        '#states' => array(
-            'visible' => array(
-                ':input[name="city"]' => array(
-                    'value' => 'India'
-                )
-            )
+        '#attributes' => array(
+            'placeholder' => 'Enter pincode....'
         )
     );
     /***************************************************************************/
@@ -547,8 +494,8 @@ function lab_migration_proposal_form_submit($form, &$form_state)
     $university = $v['university'];    
     $directory_name = _lm_dir_name($lab_title, $proposar_name, $university);
     $result = "INSERT INTO {lab_migration_proposal} 
-    (uid, approver_uid, name_title, name, contact_ph, department, university, city, district, pincode, state, country, r_version, lab_title, approval_status, solution_status, solution_provider_uid, solution_display, creation_date, approval_date, solution_date, solution_provider_name_title, solution_provider_name, solution_provider_contact_ph, solution_provider_department, solution_provider_university, directory_name,syllabus_copy_file_path) VALUES
-    (:uid, :approver_uid, :name_title, :name, :contact_ph, :department, :university, :city, :district, :pincode, :state, :country,
+    (uid, approver_uid, name_title, name, contact_ph, department, university, city, pincode, state, country, r_version, lab_title, approval_status, solution_status, solution_provider_uid, solution_display, creation_date, approval_date, solution_date, solution_provider_name_title, solution_provider_name, solution_provider_contact_ph, solution_provider_department, solution_provider_university, directory_name,syllabus_copy_file_path) VALUES
+    (:uid, :approver_uid, :name_title, :name, :contact_ph, :department, :university, :city, :pincode, :state, :country,
      :r_version, :lab_title, :approval_status, :solution_status, :solution_provider_uid, :solution_display, :creation_date, 
      :approval_date, :solution_date, :solution_provider_name_title, :solution_provider_name,
       :solution_provider_contact_ph, :solution_provider_department, :solution_provider_university, :directory_name,:syllabus_copy_file_path)";
@@ -561,7 +508,6 @@ function lab_migration_proposal_form_submit($form, &$form_state)
         ":department" => $v['department'],
         ":university" => $v['university'],
         ":city" => $v['city'],
-        ":district" => $v['district'],
         ":pincode" => $v['pincode'],
         ":state" => $v['all_state'],
         ":country" => $v['country'],

@@ -281,3 +281,25 @@ function lab_migration_download_lab()
         drupal_goto('lab-migration/lab-migration-run');
       }
   }
+function lab_migration_download_syllabus_copy()
+{
+  $proposal_id = (int)arg(3);
+  $root_path = lab_migration_path();
+  $query = db_select('lab_migration_proposal');
+  $query->fields('lab_migration_proposal');
+  $query->condition('id', $proposal_id);
+  $query->range(0, 1);
+  $result = $query->execute();
+  $syllabus_copy_file_data = $result->fetchObject();
+  $syllabus_copy_file_name = substr($syllabus_copy_file_data->syllabus_copy_file_path, strrpos($syllabus_copy_file_data->syllabus_copy_file_path, '/') + 1);
+  error_reporting(0); //Errors may corrupt download
+  ob_start(); //Insert this
+  header('Content-Description: File Transfer');
+  header('Content-Type: application/octet-stream');
+  header('Content-disposition: attachment; filename="' . $syllabus_copy_file_name . '"');
+  header('Content-Length: ' . filesize($root_path . $syllabus_copy_file_data->syllabus_copy_file_path));
+  ob_clean();
+  ob_end_flush();
+  readfile($root_path . $syllabus_copy_file_data->syllabus_copy_file_path);
+  exit;
+}

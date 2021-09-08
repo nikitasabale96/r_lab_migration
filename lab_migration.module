@@ -569,6 +569,16 @@ function lab_migration_menu()
                 ),
                 'file' => 'pdf/verify_lab_migration_certificates.inc'
         );
+        $items['lab-migration/download/syllabus-copy-file'] = array(
+        'title' => 'Syllabus Copy Download',
+        'description' => 'Syllabus Copy Download',
+        'page callback' => 'lab_migration_download_syllabus_copy',
+        'access arguments' => array(
+            'lab migration bulk manage code'
+        ),
+        'type' => MENU_CALLBACK,
+        'file' => 'download.inc'
+    );
     return $items;
   }
 /**
@@ -836,7 +846,59 @@ function lm_ucname($string)
       }
     return $string;
   }
- 
+  
+ function _lab_migration_list_of_city_pincode($city=Null, $state=NULL, $district=NULL)
+{
+    $pincode = array();
+    if($city){
+        $pincode_list = db_query("SELECT pincode FROM all_india_pincode WHERE city = :city AND state = :state AND district = :district", array(':city' => $city,':state'=> $state, ':district' => $district));
+        while ($pincode_list_data = $pincode_list->fetchObject())
+        {
+            $pincode[$pincode_list_data->pincode] = $pincode_list_data->pincode;
+        }
+    }
+    else{
+        $pincode[000000] = '000000';
+    }
+    return $pincode;
+}
+
+function _lab_migration_list_of_cities($state=Null, $district=NULL)
+{
+    $city = array(''=> '- Select -');
+    if($state){
+        $city_list = db_query("SELECT city FROM all_india_pincode WHERE state = :state AND district = :district ORDER BY city ASC", array(':state'=> $state, ':district' =>$district));
+        while ($city_list_data = $city_list->fetchObject())
+        {
+            $city[$city_list_data->city] = $city_list_data->city;
+        }
+    }
+    return $city;
+}
+
+function _lab_migration_list_of_district($state=Null)
+{
+    $district = array(''=> '- Select -');
+    if($state){
+        $district_list = db_query("SELECT district FROM all_india_pincode WHERE state = :state ORDER BY district ASC", array(':state'=> $state));
+        while ($district_list_data = $district_list->fetchObject())
+        {
+            $district[$district_list_data->district] = $district_list_data->district;
+        }
+    }
+    return $district;
+}
+
+function _lab_migration_list_of_states()
+{
+    $states = array(''=> '- Select -');
+    $states_list = db_query("SELECT state FROM all_india_pincode WHERE country = 'India' ORDER BY state ASC");
+    while ($states_list_data = $states_list->fetchObject())
+    {
+        $states[$states_list_data->state] = $states_list_data->state;
+    }
+    return $states;
+}
  function _lm_list_of_states()
   {
     $states = array(0 => '-Select-');
@@ -930,7 +992,8 @@ function _list_all_lm_certificates()
                 'Institute name',
                 'Name',
                 'Type',
-                'Download Certificates'
+                'Download Certificates',
+                'Edit Certificates'
         );
         $output .= theme('table', array(
                 'header' => $search_header,

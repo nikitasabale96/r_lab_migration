@@ -276,6 +276,13 @@ function lab_migration_proposal_approval_form($form, $form_state)
         '#markup' => $experiment_list,
         '#title' => t('Experiments')
     );
+    if ($proposal_data->syllabus_copy_file_path != "None")
+    {
+        $form['syllabus_copy_file_path'] = array(
+            '#type' => 'markup',
+            '#markup' => l('Click here to download uploaded syllabus copy', 'lab-migration/download/syllabus-copy-file/' . $proposal_id) . "<br><br>"
+        );
+    } //$row->samplefilepath != "None"
     if ($proposal_data->solution_provider_uid == 0)
       {
         $solution_provider = "User will not provide solution, we will have to provide solution";
@@ -498,6 +505,26 @@ function lab_migration_proposal_status_form($form, $form_state)
         '#type' => 'item',
         '#markup' => $proposal_data->university,
         '#title' => t('University/Institute')
+    );
+    $form['country'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->country,
+        '#title' => t('Country')
+    );
+    $form['all_state'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->state,
+        '#title' => t('State')
+    );
+    $form['city'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->city,
+        '#title' => t('City')
+    );
+    $form['pincode'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->pincode,
+        '#title' => t('Pincode/Postal code')
     );
     $form['lab_title'] = array(
         '#type' => 'item',
@@ -857,6 +884,7 @@ function lab_migration_proposal_edit_form($form, $form_state)
             'placeholder' => 'Insert pincode of your city/ village....'
         )
     );
+
     $form['lab_title'] = array(
         '#type' => 'textfield',
         '#title' => t('Title of the Lab'),

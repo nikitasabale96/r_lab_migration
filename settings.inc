@@ -74,6 +74,15 @@ function lab_migration_settings_form($form, $form_state)
         '#required' => TRUE,
         '#default_value' => variable_get('lab_migration_pdf_extensions', '')
     );
+    $form['extensions']['syllabus'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Allowed syllabus file extensions'),
+        '#description' => t('A comma separated list WITHOUT SPACE of xcos file extensions that are permitted to be uploaded on the server'),
+        '#size' => 50,
+        '#maxlength' => 255,
+        '#required' => TRUE,
+        '#default_value' => variable_get('lab_migration_syllabus_file_extensions', '')
+    );
     $form['submit'] = array(
         '#type' => 'submit',
         '#value' => t('Submit')
@@ -94,5 +103,6 @@ function lab_migration_settings_form_submit($form, &$form_state)
     variable_set('lab_migration_result_extensions', $form_state['values']['result']);
     variable_set('lab_migration_xcos_extensions', $form_state['values']['xcos']);
     variable_set('lab_migration_pdf_extensions', $form_state['values']['pdf']);
+    variable_set('lab_migration_syllabus_file_extensions', $form_state['values']['syllabus']);
     drupal_set_message(t('Settings updated'), 'status');
   }

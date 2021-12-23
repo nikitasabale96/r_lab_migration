@@ -601,19 +601,41 @@ function lab_migration_proposal_status_form($form, $form_state)
     );
     if($proposal_data->approval_status == 0)
     {
-        $form['completion_date'] = array(
-        '#type' => 'item',
-        '#markup' => "Expected completion date soon",
-        '#title' => t('Date Of Completion')
-        );
+        if($proposal_data->expected_completion_date == 0)
+        {
+            $form['completion_date'] = array(
+            '#type' => 'item',
+            '#markup' => 'Expecting date of completion soon',
+            '#title' => t('Expected date of completion')
+            );
+        }
+        else
+        {   
+            $form['completion_date'] = array(
+            '#type' => 'item',
+            '#markup' => date('d-m-Y', $proposal_data->expected_completion_date),
+            '#title' => t('Expected date of completion')
+            );
+        }
     }
     if($proposal_data->approval_status == 1)
     {
-        $form['completion_date'] = array(
-        '#type' => 'item',
-        '#markup' => "Expected completion date soon",
-        '#title' => t('Date Of Completion')
-        );
+        if($proposal_data->expected_completion_date == 0)
+        {
+            $form['completion_date'] = array(
+            '#type' => 'item',
+            '#markup' => 'Expecting date of completion soon',
+            '#title' => t('Expected date of completion')
+            );
+        }
+        else
+        {   
+            $form['completion_date'] = array(
+            '#type' => 'item',
+            '#markup' => date('d-m-Y', $proposal_data->expected_completion_date),
+            '#title' => t('Expected date of completion')
+            );
+        }
     }
     if ($proposal_data->approval_status == 0)
       {
@@ -639,6 +661,7 @@ function lab_migration_proposal_status_form($form, $form_state)
             '#title' => t('Reason for disapproval')
         );
       }
+    //DATE OF COMPLETION
     if($proposal_data->approval_status  == 3)
     {
         $form['completion_date'] = array(
@@ -647,7 +670,6 @@ function lab_migration_proposal_status_form($form, $form_state)
         '#title' => t('Date Of Completion')
         );
     }
-    
     if($proposal_data->approval_status == 2)
     {
         $form['completion_date'] = array(

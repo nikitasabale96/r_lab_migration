@@ -127,7 +127,7 @@ function lab_migration_proposal_all()
         return '';
       }
     $proposal_header = array(
-        'Date of Submission',
+        'Date of Proposal Submission',
         'Name',
         'Title of the Lab',
         'Department',
@@ -599,6 +599,44 @@ function lab_migration_proposal_status_form($form, $form_state)
         '#markup' => $proposal_status,
         '#title' => t('Proposal Status')
     );
+    if($proposal_data->approval_status == 0)
+    {
+        if($proposal_data->expected_completion_date == 0)
+        {
+            $form['completion_date'] = array(
+            '#type' => 'item',
+            '#markup' => 'Expecting date of completion soon',
+            '#title' => t('Date of Completion')
+            );
+        }
+        else
+        {   
+            $form['completion_date'] = array(
+            '#type' => 'item',
+            '#markup' => date('d-m-Y', $proposal_data->expected_completion_date),
+            '#title' => t('Expected date of completion')
+            );
+        }
+    }
+    if($proposal_data->approval_status == 1)
+    {
+        if($proposal_data->expected_completion_date == 0)
+        {
+            $form['completion_date'] = array(
+            '#type' => 'item',
+            '#markup' => 'Expecting date of completion soon',
+            '#title' => t('Date of Completion')
+            );
+        }
+        else
+        {   
+            $form['completion_date'] = array(
+            '#type' => 'item',
+            '#markup' => date('d-m-Y', $proposal_data->expected_completion_date),
+            '#title' => t('Date of Completion')
+            );
+        }
+    }
     if ($proposal_data->approval_status == 0)
       {
         $form['approve'] = array(
@@ -623,6 +661,23 @@ function lab_migration_proposal_status_form($form, $form_state)
             '#title' => t('Reason for disapproval')
         );
       }
+    //DATE OF COMPLETION
+    if($proposal_data->approval_status  == 3)
+    {
+        $form['completion_date'] = array(
+        '#type' => 'item',
+        '#markup' => date('d-m-Y', $proposal_data->expected_completion_date),
+        '#title' => t('Date of Completion')
+        );
+    }
+    if($proposal_data->approval_status == 2)
+    {
+        $form['completion_date'] = array(
+        '#type' => 'item',
+        '#markup' => "Proposal is disapproved",
+        '#title' => t('Date of Completion')
+        );
+    }
     $form['submit'] = array(
         '#type' => 'submit',
         '#value' => t('Submit')

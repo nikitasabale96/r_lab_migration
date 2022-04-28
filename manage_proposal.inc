@@ -253,6 +253,16 @@ function lab_migration_proposal_approval_form($form, $form_state)
         '#markup' => $proposal_data->pincode,
         '#title' => t('Pincode/Postal code')
     );
+    $form['operating_system'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->operating_system,
+        '#title' => t('Operating System')
+    );
+    $form['version'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->r_version,
+        '#title' => t('R Version')
+    );
     $form['lab_title'] = array(
         '#type' => 'item',
         '#markup' => $proposal_data->lab_title,
@@ -525,6 +535,16 @@ function lab_migration_proposal_status_form($form, $form_state)
         '#type' => 'item',
         '#markup' => $proposal_data->pincode,
         '#title' => t('Pincode/Postal code')
+    );
+    $form['operating_system'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->operating_system,
+        '#title' => t('Operating System')
+    );
+    $form['version'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->r_version,
+        '#title' => t('R Version')
     );
     $form['lab_title'] = array(
         '#type' => 'item',
@@ -939,6 +959,17 @@ function lab_migration_proposal_edit_form($form, $form_state)
             'placeholder' => 'Insert pincode of your city/ village....'
         )
     );
+    $form['operating_system'] = array(
+        '#type' => 'textfield',
+        '#default_value' => $proposal_data->operating_system,
+        '#title' => t('Operating System')
+    );
+    $form['version'] = array(
+        '#type' => 'select',
+        '#title' => t('R Version'),
+        '#options' => _lm_list_of_software_version(),
+        '#markup' => $proposal_data->r_version
+    );
 
     $form['lab_title'] = array(
         '#type' => 'textfield',
@@ -1214,6 +1245,8 @@ function lab_migration_proposal_edit_form_submit($form, &$form_state)
         'city' => $v['city'],
         'pincode' => $v['pincode'],
         'state' => $v['all_state'],
+        ":operating_system" => $v['operating_system'],
+        ":r_version" => $form_state['values']['version'],
         'lab_title' => $v['lab_title'],
         'solution_display' => $solution_display,
         'directory_name' => $directory_name

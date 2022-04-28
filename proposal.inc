@@ -338,7 +338,7 @@ function lab_migration_proposal_form($form, &$form_state)
     $form['sample_syllabus_file'] = array(
         '#type' => 'item',
         '#title' => t('<h5>Ideal Sample Lab Migration Submission</h5>'),
-        '#markup' => t('Kindly refer to the ') . t('<a href= "https://r.fossee.in/lab-migration/lab-migration-run/12" target="_blank">Sample Lab Migration (Statistical Quality Control using R)</a> and <a href= "https://r.fossee.in/lab-migration/lab-migration-run/6" target="_blank">Sample Lab Migration (Statistical Quality Control using R)</a>') . '' . t(' to know the ideal submission.')
+        '#markup' => t('Kindly refer to the ') . t('<a href= "https://r.fossee.in/lab-migration/lab-migration-run/12" target="_blank">Sample Lab Migration (Statistical Quality Control using R)</a> and <a href= "https://r.fossee.in/lab-migration/lab-migration-run/6" target="_blank">Sample Lab Migration (Analysis using R)</a>') . '' . t(' to know the ideal submission.')
     );
     $form['submit'] = array(
         '#type' => 'submit',

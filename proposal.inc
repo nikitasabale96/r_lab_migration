@@ -206,9 +206,16 @@ function lab_migration_proposal_form($form, &$form_state)
         '#type' => 'item',
         '#markup' => '<hr>'
     );
+    $form['operating_system'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Operating System'),
+        '#size' => 30,
+        '#maxlength' => 100,
+        '#required' => TRUE
+    );
     $form['version'] = array(
         '#type' => 'select',
-        '#title' => t('Version'),
+        '#title' => t('R Version'),
         '#options' => _lm_list_of_software_version(),
         '#required' => TRUE
     );
@@ -226,7 +233,6 @@ function lab_migration_proposal_form($form, &$form_state)
             )
         )
     );
-
     $form['syllabus_copy'] = array(
         '#type' => 'fieldset',
         '#title' => t('<span class="form-required form-item" title="This field is required.">Syllabus copy (PDF) Files *</span>'),
@@ -328,6 +334,11 @@ function lab_migration_proposal_form($form, &$form_state)
         '#default_value' => '1',
         '#description' => 'If yes, solutions will be made available to everyone for downloading.',
         '#disabled' => FALSE
+    );
+    $form['sample_syllabus_file'] = array(
+        '#type' => 'item',
+        '#title' => t('<h5>Ideal Sample Lab Migration Submission</h5>'),
+        '#markup' => t('Kindly refer to the ') . t('<a href= "https://r.fossee.in/lab-migration/lab-migration-run/12" target="_blank">Sample Lab Migration (Statistical Quality Control using R)</a> and <a href= "https://r.fossee.in/lab-migration/lab-migration-run/6" target="_blank">Sample Lab Migration (Analysis using R)</a>') . '' . t(' to know the ideal submission.')
     );
     $form['submit'] = array(
         '#type' => 'submit',
@@ -494,8 +505,8 @@ function lab_migration_proposal_form_submit($form, &$form_state)
     $university = $v['university'];    
     $directory_name = _lm_dir_name($lab_title, $proposar_name, $university);
     $result = "INSERT INTO {lab_migration_proposal} 
-    (uid, approver_uid, name_title, name, contact_ph, department, university, city, pincode, state, country, r_version, lab_title, approval_status, solution_status, solution_provider_uid, solution_display, creation_date, approval_date, solution_date, solution_provider_name_title, solution_provider_name, solution_provider_contact_ph, solution_provider_department, solution_provider_university, directory_name,syllabus_copy_file_path) VALUES
-    (:uid, :approver_uid, :name_title, :name, :contact_ph, :department, :university, :city, :pincode, :state, :country,
+    (uid, approver_uid, name_title, name, contact_ph, department, university, city, pincode, state, country, operating_system, r_version, lab_title, approval_status, solution_status, solution_provider_uid, solution_display, creation_date, approval_date, solution_date, solution_provider_name_title, solution_provider_name, solution_provider_contact_ph, solution_provider_department, solution_provider_university, directory_name,syllabus_copy_file_path) VALUES
+    (:uid, :approver_uid, :name_title, :name, :contact_ph, :department, :university, :city, :pincode, :state, :country, :operating_system, 
      :r_version, :lab_title, :approval_status, :solution_status, :solution_provider_uid, :solution_display, :creation_date, 
      :approval_date, :solution_date, :solution_provider_name_title, :solution_provider_name,
       :solution_provider_contact_ph, :solution_provider_department, :solution_provider_university, :directory_name,:syllabus_copy_file_path)";
@@ -511,6 +522,7 @@ function lab_migration_proposal_form_submit($form, &$form_state)
         ":pincode" => $v['pincode'],
         ":state" => $v['all_state'],
         ":country" => $v['country'],
+        ":operating_system" => $v['operating_system'],
         ":r_version" => $form_state['values']['version'],
         ":lab_title" => $v['lab_title'],
         ":approval_status" => 0,

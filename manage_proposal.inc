@@ -263,6 +263,11 @@ function lab_migration_proposal_approval_form($form, $form_state)
         '#markup' => $proposal_data->r_version,
         '#title' => t('R Version')
     );
+    $form['syllabus_link'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->syllabus_link,
+        '#title' => t('Syllabus Link'),
+    );
     $form['lab_title'] = array(
         '#type' => 'item',
         '#markup' => $proposal_data->lab_title,
@@ -545,6 +550,11 @@ function lab_migration_proposal_status_form($form, $form_state)
         '#type' => 'item',
         '#markup' => $proposal_data->r_version,
         '#title' => t('R Version')
+    );
+    $form['syllabus_link'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->syllabus_link,
+        '#title' => t('Syllabus Link'),
     );
     $form['lab_title'] = array(
         '#type' => 'item',
@@ -970,7 +980,11 @@ function lab_migration_proposal_edit_form($form, $form_state)
         '#options' => _lm_list_of_software_version(),
         '#markup' => $proposal_data->r_version
     );
-
+    $form['syllabus_link'] = array(
+        '#type' => 'item',
+        '#markup' => $proposal_data->syllabus_link,
+        '#title' => t('Syllabus Link'),
+    );
     $form['lab_title'] = array(
         '#type' => 'textfield',
         '#title' => t('Title of the Lab'),

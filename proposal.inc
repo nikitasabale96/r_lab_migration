@@ -233,6 +233,14 @@ function lab_migration_proposal_form($form, &$form_state)
             )
         )
     );
+    $form['syllabus_link'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Syllabus Link'),
+        '#required' => TRUE,
+        '#attributes' => array(
+            'placeholder' => 'Add the syllabus link '
+        )
+    );
     $form['syllabus_copy'] = array(
         '#type' => 'fieldset',
         '#title' => t('<span class="form-required form-item" title="This field is required.">Syllabus copy (PDF) Files *</span>'),
@@ -505,9 +513,9 @@ function lab_migration_proposal_form_submit($form, &$form_state)
     $university = $v['university'];    
     $directory_name = _lm_dir_name($lab_title, $proposar_name, $university);
     $result = "INSERT INTO {lab_migration_proposal} 
-    (uid, approver_uid, name_title, name, contact_ph, department, university, city, pincode, state, country, operating_system, r_version, lab_title, approval_status, solution_status, solution_provider_uid, solution_display, creation_date, approval_date, solution_date, solution_provider_name_title, solution_provider_name, solution_provider_contact_ph, solution_provider_department, solution_provider_university, directory_name,syllabus_copy_file_path) VALUES
+    (uid, approver_uid, name_title, name, contact_ph, department, university, city, pincode, state, country, operating_system, r_version, syllabus_link, lab_title, approval_status, solution_status, solution_provider_uid, solution_display, creation_date, approval_date, solution_date, solution_provider_name_title, solution_provider_name, solution_provider_contact_ph, solution_provider_department, solution_provider_university, directory_name,syllabus_copy_file_path) VALUES
     (:uid, :approver_uid, :name_title, :name, :contact_ph, :department, :university, :city, :pincode, :state, :country, :operating_system, 
-     :r_version, :lab_title, :approval_status, :solution_status, :solution_provider_uid, :solution_display, :creation_date, 
+     :r_version, :syllabus_link, :lab_title, :approval_status, :solution_status, :solution_provider_uid, :solution_display, :creation_date, 
      :approval_date, :solution_date, :solution_provider_name_title, :solution_provider_name,
       :solution_provider_contact_ph, :solution_provider_department, :solution_provider_university, :directory_name,:syllabus_copy_file_path)";
     $args = array(
@@ -524,6 +532,7 @@ function lab_migration_proposal_form_submit($form, &$form_state)
         ":country" => $v['country'],
         ":operating_system" => $v['operating_system'],
         ":r_version" => $form_state['values']['version'],
+        ":syllabus_link" => $v['syllabus_link'],
         ":lab_title" => $v['lab_title'],
         ":approval_status" => 0,
         ":solution_status" => $solution_status,

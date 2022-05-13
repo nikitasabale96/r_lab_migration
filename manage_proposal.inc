@@ -99,13 +99,13 @@ function lab_migration_proposal_all()
                 $approval_status = 'Pending';
                 break;
             case 1:
-                $approval_status = 'Approved';
+                $approval_status = "<span style='color:red;'>Approved</span>";
                 break;
             case 2:
-                $approval_status = 'Dis-approved';
+                $approval_status = "<span style='color:black;'>Dis-approved</span>";
                 break;
             case 3:
-                $approval_status = 'Solved';
+                $approval_status = "<span style='color:green;'>Solved</span>";
                 break;
             default:
                 $approval_status = 'Unknown';

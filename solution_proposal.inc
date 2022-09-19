@@ -359,7 +359,7 @@ function lab_migration_solution_proposal_form_submit($form, &$form_state)
         ":solution_provider_pincode" => $form_state['values']['pincode'],
         ":solution_provider_state" => $form_state['values']['all_state'],
         ":solution_provider_country" => $form_state['values']['country'],
-        ":version" => $form_state['values']['version'],
+        ":r_version" => $form_state['values']['version'],
         
         ":proposal_id" => $proposal_id
     );

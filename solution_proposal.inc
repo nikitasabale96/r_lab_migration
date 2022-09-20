@@ -347,9 +347,10 @@ function lab_migration_solution_proposal_form_submit($form, &$form_state)
         drupal_set_message("Someone has already applied for solving this Lab.", 'error');
         drupal_goto('lab-migration/open-proposal');
       }
-    $query = "UPDATE {lab_migration_proposal} set solution_provider_uid = :uid, solution_status = 1, solution_provider_name_title = :solution_provider_name_title, solution_provider_name = :solution_provider_contact_name, solution_provider_contact_ph = :solution_provider_contact_ph, solution_provider_department = :solution_provider_department, solution_provider_university = :solution_provider_university , solution_provider_city = :solution_provider_city, solution_provider_pincode = :solution_provider_pincode, solution_provider_state = :solution_provider_state,solution_provider_country = :solution_provider_country, r_version = :version WHERE id = :proposal_id";
+    $query = "UPDATE {lab_migration_proposal} set solution_provider_uid = :uid, solution_status = :solution_status, solution_provider_name_title = :solution_provider_name_title, solution_provider_name = :solution_provider_contact_name, solution_provider_contact_ph = :solution_provider_contact_ph, solution_provider_department = :solution_provider_department, solution_provider_university = :solution_provider_university , solution_provider_city = :solution_provider_city, solution_provider_pincode = :solution_provider_pincode, solution_provider_state = :solution_provider_state,solution_provider_country = :solution_provider_country, r_version = :version WHERE id = :proposal_id";
     $args = array(
         ":uid" => $user->uid,
+        ":solution_status" => 1,
         ":solution_provider_name_title" => $form_state['values']['solution_provider_name_title'],
         ":solution_provider_contact_name" => $form_state['values']['solution_provider_name'],
         ":solution_provider_contact_ph" => $form_state['values']['solution_provider_contact_ph'],

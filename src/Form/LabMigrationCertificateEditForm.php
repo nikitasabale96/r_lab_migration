@@ -1,54 +1,40 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\lab_migration\Form\LabMigrationCertificateEditForm.
- */
-
 namespace Drupal\lab_migration\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LabMigrationCertificateEditForm extends FormBase {
 
-  /**
-   * {@inheritdoc}
-   */
   public function getFormId() {
     return 'lab_migration_certificate_edit_form';
   }
 
-  public function buildForm(array $form, \Drupal\Core\Form\FormStateInterface $form_state) {
-    // $type = arg(2);
-    $route_match = \Drupal::routeMatch();
+  public function buildForm(array $form, FormStateInterface $form_state) {
 
-$type = (int) $route_match->getParameter('type');
-    // $action = arg(4);
-    $route_match = \Drupal::routeMatch();
+$route_match = \Drupal::routeMatch();
 
-$action = (int) $route_match->getParameter('action');
-    // $proposal_id = arg(5);
-    $route_match = \Drupal::routeMatch();
-
+$type = $route_match->getParameter('type');
+$action = $route_match->getParameter('action');
 $proposal_id = (int) $route_match->getParameter('proposal_id');
-    // $certi_id = arg(6);
-    $route_match = \Drupal::routeMatch();
-
 $certi_id = (int) $route_match->getParameter('certi_id');
-    //var_dump($type. "--".$action."--".$proposal_id."--".$certi_id);
-    //die;
     if ($type == "lm-proposer" && $action == "edit") {
-      $query = \Drupal::database()->query("SELECT * FROM lab_migration_certificate WHERE proposal_id=:prop_id AND id=:certi_id", [
-        ":prop_id" => $proposal_id,
-        ":certi_id" => $certi_id,
-      ]);
-      $details_list = $query->fetchobject();
-      if ($details_list->type == "Proposer") {
+
+      $details_list = \Drupal::database()->query(
+        "SELECT * FROM {lab_migration_certificate} WHERE proposal_id = :prop_id AND id = :certi_id",
+        [
+          ":prop_id" => $proposal_id,
+          ":certi_id" => $certi_id,
+        ]
+      )->fetchObject();
+
+      if ($details_list && $details_list->type == "Proposer") {
+
         $form['name_title'] = [
           '#type' => 'select',
-          '#title' => t('Title'),
+          '#title' => $this->t('Title'),
           '#options' => [
             'Dr.' => 'Dr.',
             'Prof.' => 'Prof.',
@@ -58,111 +44,111 @@ $certi_id = (int) $route_match->getParameter('certi_id');
           ],
           '#default_value' => $details_list->name_title,
         ];
+
         $form['name'] = [
           '#type' => 'textfield',
-          '#title' => t('Name of Proposer'),
-          // '#maxlength' => 50,
+          '#title' => $this->t('Name of Proposer'),
           '#default_value' => $details_list->name,
         ];
+
         $form['email_id'] = [
           '#type' => 'textfield',
-          '#title' => t('Email'),
-          // '#size' => 50,
+          '#title' => $this->t('Email'),
           '#default_value' => $details_list->email_id,
         ];
+
         $form['institute_name'] = [
           '#type' => 'textfield',
-          '#title' => t('Collage / Institue Name'),
+          '#title' => $this->t('College / Institute Name'),
           '#default_value' => $details_list->institute_name,
         ];
+
         $form['institute_address'] = [
           '#type' => 'textfield',
-          '#title' => t('Collage / Institue address'),
+          '#title' => $this->t('College / Institute Address'),
           '#default_value' => $details_list->institute_address,
         ];
+
         $form['lab_name'] = [
           '#type' => 'textfield',
-          '#title' => t('Lab name'),
+          '#title' => $this->t('Lab name'),
           '#default_value' => $details_list->lab_name,
         ];
+
         $form['department'] = [
           '#type' => 'textfield',
-          '#title' => t('Department'),
+          '#title' => $this->t('Department'),
           '#default_value' => $details_list->department,
         ];
+
         $form['semester_details'] = [
           '#type' => 'textfield',
-          '#title' => t('Semester details'),
+          '#title' => $this->t('Semester details'),
           '#default_value' => $details_list->semester_details,
         ];
+
         $form['proposal_id'] = [
           '#type' => 'textfield',
-          '#title' => t('Lab Proposal Id'),
-          '#description' => 'Note: You can find it in respective completed labs url -> r.fossee.in/lab-migration/lab-migration-run/64 <- this number is the proposal id for respective lab',
+          '#title' => $this->t('Lab Proposal Id'),
+          '#description' => $this->t('Find it in URL: r.fossee.in/lab-migration/lab-migration-run/{id}'),
           '#default_value' => $details_list->proposal_id,
         ];
+
         $form['certi_id'] = [
           '#type' => 'hidden',
           '#default_value' => $details_list->id,
         ];
+
         $form['submit'] = [
           '#type' => 'submit',
-          '#value' => t('Submit'),
+          '#value' => $this->t('Submit'),
         ];
-      } //$details_list->type == "Proposer"
+      }
       else {
         $form['err_message'] = [
           '#type' => 'item',
-          '#title' => t('Message'),
-          '#markup' => 'Invalid information',
+          '#title' => $this->t('Message'),
+          '#markup' => $this->t('Invalid information'),
         ];
       }
-    } //$type == "lm-proposer" && $action == "edit"
+    }
     else {
       $form['err_message'] = [
         '#type' => 'item',
-        '#title' => t('Message'),
-        '#markup' => 'Invalid information',
+        '#title' => $this->t('Message'),
+        '#markup' => $this->t('Invalid information'),
       ];
     }
+
     return $form;
   }
 
-  public function submitForm(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+
     $user = \Drupal::currentUser();
     $v = $form_state->getValues();
-    $result = "UPDATE lab_migration_certificate SET
-    uid=:uid, 
-    name_title=:name_title, 
-    name=:name, 
-    email_id=:email_id, 
-    institute_name=:institute_name, 
-    institute_address=:institute_address, 
-    lab_name=:lab_name, 
-    department=:department, 
-    semester_details=:semester_details,
-    proposal_id=:proposal_id,
-    type=:type,
-    creation_date=:creation_date
-    WHERE id=:certi_id";
-    $args = [
-      ":uid" => $user->uid,
-      ":name_title" => trim($v['name_title']),
-      ":name" => trim($v['name']),
-      ":email_id" => trim($v['email_id']),
-      ":institute_name" => trim($v['institute_name']),
-      ":institute_address" => trim($v['institute_address']),
-      ":lab_name" => trim($v['lab_name']),
-      ":department" => trim($v['department']),
-      ":semester_details" => trim($v['semester_details']),
-      ":proposal_id" => trim($v['proposal_id']),
-      ":type" => "Proposer",
-      ":creation_date" => time(),
-      ":certi_id" => $v['certi_id'],
-    ];
-    $proposal_id = \Drupal::database()->query($result, $args);
-    RedirectResponse('lab-migration/certificate');
+
+    \Drupal::database()->update('lab_migration_certificate')
+      ->fields([
+        'uid' => $user->id(),
+        'name_title' => trim($v['name_title']),
+        'name' => trim($v['name']),
+        'email_id' => trim($v['email_id']),
+        'institute_name' => trim($v['institute_name']),
+        'institute_address' => trim($v['institute_address']),
+        'lab_name' => trim($v['lab_name']),
+        'department' => trim($v['department']),
+        'semester_details' => trim($v['semester_details']),
+        'proposal_id' => trim($v['proposal_id']),
+        'type' => 'Proposer',
+        'creation_date' => time(),
+      ])
+      ->condition('id', $v['certi_id'])
+      ->execute();
+
+    \Drupal::messenger()->addStatus($this->t('Certificate updated successfully.'));
+
+    return new RedirectResponse('/lab-migration/certificate');
   }
 
 }
-?>

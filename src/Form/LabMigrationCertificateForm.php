@@ -39,13 +39,13 @@ class LabMigrationCertificateForm extends FormBase {
     $form['name'] = [
       '#type' => 'textfield',
       '#title' => t('Name of Proposer'),
-      '#maxlength' => 50,
+      // '#maxlength' => 50,
       '#required' => TRUE,
     ];
     $form['email_id'] = [
       '#type' => 'textfield',
       '#title' => t('Email'),
-      '#size' => 50,
+      // '#size' => 50,
     ];
     $form['institute_name'] = [
       '#type' => 'textfield',

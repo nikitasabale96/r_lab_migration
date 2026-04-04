@@ -22,6 +22,8 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Mail\MailManager;
 use Drupal\Core\Mail\MailManagerInterface;
 use Drupal\Core\DependencyInjection\ContainerInterface;
+use Drupal\user\Entity\User;
+
 class LabMigrationProposalForm extends FormBase {
 
   /**
@@ -109,7 +111,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
       '#type' => 'textfield',
       // '#attributes' => array('class' => array('form-control')),
 '#title' => $this->t('Name of the Proposer'),
-      '#size' => 100,
+      // '#size' => 100,
       '#attributes' => [
   'class' => ['form-control'],
         'placeholder' => $this->t('Enter your full name')
@@ -121,7 +123,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
       '#type' => 'textfield',
       // '#attributes' => array('class' => array('form-control')),
 '#title' => $this->t('Email'),
-      '#size' => 30,
+      // '#size' => 30,
       '#value' => $user ? $user->getEmail() : '',
       '#disabled' => TRUE,
     ];
@@ -129,7 +131,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
       '#type' => 'textfield',
       '#attributes' => array('class' => array('form-control')),
 '#title' => $this->t('Contact No.'),
-      '#size' => 30,
+      // '#size' => 30,
       '#attributes' => [
         'placeholder' => t('Enter your contact number')
         ],
@@ -148,7 +150,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
       '#type' => 'textfield',
       // '#attributes' => array('class' => array('form-control')),
 '#title' => $this->t('University/ Institute'),
-      '#size' => 50,
+      // '#size' => 50,
       '#maxlength' => 200,
       '#required' => TRUE,
       '#attributes' => [
@@ -172,7 +174,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
       '#type' => 'textfield',
       // '#attributes' => array('class' => array('form-control')),
 '#title' => $this->t('Other than India'),
-      '#size' => 30,
+      // '#size' => 30,
       '#attributes' => [
         'placeholder' => $this->t('Enter your country name')
         ],
@@ -188,7 +190,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
       '#type' => 'textfield',
       // '#attributes' => array('class' => array('form-control')),
 '#title' => t('State other than India'),
-      '#size' => 50,
+      // '#size' => 50,
       '#attributes' => [
         'placeholder' => t('Enter your state/region name')
         ],
@@ -204,7 +206,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
       '#type' => 'textfield',
       // '#attributes' => array('class' => array('form-control')),
 '#title' => $this->t('City other than India'),
-      '#size' => 50,
+      // '#size' => 50,
       '#attributes' => [
         'placeholder' => $this->t('Enter your city name')
         ],
@@ -247,7 +249,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
       '#type' => 'textfield',
       '#attributes' => array('class' => array('form-control')),
 '#title' => t('Pincode'),
-      '#size' => 30,
+      // '#size' => 30,
       '#maxlength' => 6,
       '#required' => TRUE,
       '#attributes' => [
@@ -264,7 +266,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
       '#type' => 'textfield',
       // '#attributes' => array('class' => array('form-control')),
 '#title' => t('Operating System'),
-      '#size' => 30,
+      // '#size' => 30,
       '#maxlength' => 100,
       '#required' => TRUE,
     ];
@@ -275,9 +277,9 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
       '#options' =>\Drupal::service("lab_migration_global")->_lm_list_of_software_version(),
       '#required' => TRUE,
     ];
-    $form['older'] = [
+        $form['older'] = [
       '#type' => 'textfield',
-      '#size' => 30,
+      // '#size' => 30,
       '#maxlength' => 50,
       //'#required' => TRUE,
         '#description' => $this->t('Specify the Older version used'),
@@ -315,7 +317,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
     $form['syllabus_copy']['syllabus_copy_file'] = [
       '#type' => 'file',
       '#title' => $this->t('Upload pdf file'),
-      '#size' => 48,
+      // '#size' => 48,
     '#description' => $this->t('Separate filenames with underscore. No spaces or any special characters allowed in filename.') . '<br />' . t('<span style="color:red;">Allowed file extensions : ') . \Drupal::config('lab_migration.settings')->get('lab_migration_syllabus_file_extensions') . '</span>',
 
     ];
@@ -323,7 +325,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
       '#type' => 'textfield',
       '#attributes' => array('class' => array('form-control')),
 '#title' => $this->t('Title of the Lab'),
-      '#size' => 100,
+      // '#size' => 100,
       '#required' => TRUE,
     ];
     $first_experiemnt = TRUE;
@@ -333,7 +335,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
           '#type' => 'textfield',
           '#attributes' => array('class' => array('form-control')),
 '#title' => $this->t('Title of the Experiment ') . $counter,
-          '#size' => 100,
+          // '#size' => 100,
           '#required' => TRUE,
         ];
         $namefield = "lab_experiment-" . $counter;
@@ -361,7 +363,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
           '#type' => 'textfield',
           '#attributes' => array('class' => array('form-control')),
 '#title' => $this->t('Title of the Experiment ') . $counter,
-          '#size' => 100,
+          // '#size' => 100,
           '#required' => FALSE,
         ];
         $namefield = "lab_experiment-" . $counter;
@@ -526,7 +528,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
   }
 
   public function submitForm(array &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
-    $user = currentUser();
+    $user = \Drupal::currentUser();
     if (!$user->id()) {
       \Drupal::messenger()->addmessage('It is mandatory to login on this website to access the proposal form');
       return;
@@ -540,7 +542,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
     $solution_provider_university = '';
     $syllabus_copy_file_path = '';
     if ($form_state->getValue(['solution_provider_uid']) == "1") {
-      $solution_provider_uid = $user->get('uid')->value;
+      $solution_provider_uid = $this->currentUser()->id();
       $solution_status = 1;
       $solution_provider_name_title = $form_state->getValue(['name_title']);
       $solution_provider_name = $form_state->getValue(['name']);
@@ -568,13 +570,13 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
     $university = $v['university'];
     $directory_name = \Drupal::service("lab_migration_global")->_lm_dir_name($lab_title, $proposar_name, $university);
     $result = "INSERT INTO {lab_migration_proposal} 
-    (uid, approver_uid, name_title, name, contact_ph, department, university, city, pincode, state, country, operating_system, version, syllabus_link, lab_title, approval_status, solution_status, solution_provider_uid, solution_display, creation_date, approval_date, solution_date, solution_provider_name_title, solution_provider_name, solution_provider_contact_ph, solution_provider_department, solution_provider_university, directory_name,syllabus_copy_file_path) VALUES
+    (uid, approver_uid, name_title, name, contact_ph, department, university, city, pincode, state, country, operating_system, r_version, syllabus_link, lab_title, approval_status, solution_status, solution_provider_uid, solution_display, creation_date, approval_date, solution_date, solution_provider_name_title, solution_provider_name, solution_provider_contact_ph, solution_provider_department, solution_provider_university, directory_name,syllabus_copy_file_path) VALUES
     (:uid, :approver_uid, :name_title, :name, :contact_ph, :department, :university, :city, :pincode, :state, :country, :operating_system, 
-     :version, :syllabus_link, :lab_title, :approval_status, :solution_status, :solution_provider_uid, :solution_display, :creation_date, 
+     :r_version, :syllabus_link, :lab_title, :approval_status, :solution_status, :solution_provider_uid, :solution_display, :creation_date, 
      :approval_date, :solution_date, :solution_provider_name_title, :solution_provider_name,
       :solution_provider_contact_ph, :solution_provider_department, :solution_provider_university, :directory_name,:syllabus_copy_file_path)";
    $args = [
-    'uid' => $user->get('uid')->value,
+    'uid' => $this->currentUser()->id(),
     'approver_uid' => 0,
     'name_title' => $v['name_title'],
     'name' => $v['name'],
@@ -586,7 +588,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
     'state' => $v['all_state'],
     'country' => $v['country'],
     'operating_system' => $v['operating_system'],
-    'version' => $form_state->getValue(['version']),
+    'r_version' => $form_state->getValue(['version']),
     'syllabus_link' => $v['syllabus_link'],
     'lab_title' => $v['lab_title'],
     'approval_status' => 0,
@@ -604,7 +606,7 @@ $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
     'directory_name' => $directory_name,
     'syllabus_copy_file_path' => "",
   ];
-    
+
     // $connection = \Drupal::database();
 // $proposal_id = $connection->insert('lab_migration_proposal');
 $connection = Database::getConnection();
@@ -707,9 +709,9 @@ $params['proposal_received']['headers'] = [
   'Cc' => $cc,
   'Bcc' => $bcc,
 ];
-//\Drupal::service('plugin.manager.mail')->mail('lab_migration', 'proposal_received', $email_to, 'en', $params, $form, TRUE);
-if (!\Drupal::service('lab_migration_email')->lab_migration_mail('lab_migration', 'proposal_received', $email_to, 'en', $params, $form, TRUE)) {
-  \Drupal::messenger()->addError('Error sending email message.');
+    $langcode = $user->getPreferredLangcode();
+if (!\Drupal::service('plugin.manager.mail')->mail('lab_migration', 'proposal_received', $email_to, 'en', $params, $form, TRUE));
+ { \Drupal::messenger()->addmessage('Mail sent successfully.');
 }
     \Drupal::messenger()->addmessage($this->t('We have received you Lab migration proposal. We will get back to you soon.'));
      $response = new RedirectResponse(Url::fromRoute('<front>')->toString());
@@ -719,4 +721,3 @@ if (!\Drupal::service('lab_migration_email')->lab_migration_mail('lab_migration'
   }
 
 }
-?>

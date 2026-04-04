@@ -16,6 +16,9 @@ use Drupal\user\Entity\User;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
+use Drupal\Core\Mail\MailManager;
+use Drupal\Core\Mail\MailManagerInterface;
+
 
 class LabMigrationProposalStatusForm extends FormBase {
 
@@ -288,7 +291,7 @@ $proposal_id = (int) $route_match->getParameter('id');
       else {
         \Drupal::messenger()->addmessage(t('Invalid proposal selected. Please try again.'), 'error');
         // RedirectResponse('lab-migration/manage-proposal');
-        $response = new RedirectResponse('/lab-migration/manage-proposal');
+        $response = new RedirectResponse('/lab-migration/manage-proposal/pending-solution');
         $response->send();
         return;
       }
@@ -315,23 +318,75 @@ $response->send();
       //   \Drupal::messenger()->addmessage('Error in update status', 'error');
       //   return;
       // }
-      /* sending email */
-  //     $user_data = User::load($proposal_data->uid);
-  //     $email_to = $user_data->mail;
-  //     $from = $config->get('lab_migration_from_email', '');
-  //     $bcc = $user->mail . ', ' . $config->get('lab_migration_emails', '');
-  //     $cc = $config->get('lab_migration_cc_emails', '');
-  //     $param['proposal_completed']['proposal_id'] = $proposal_id;
-  //     $param['proposal_completed']['user_id'] = $proposal_data->uid;
-  //     $param['proposal_completed']['headers'] = [
-  //       'From' => $from,
-  //       'MIME-Version' => '1.0',
-  //       'Content-Type' => 'text/plain; charset=UTF-8; format=flowed; delsp=yes',
-  //       'Content-Transfer-Encoding' => '8Bit',
-  //       'X-Mailer' => 'Drupal',
-  //       'Cc' => $cc,
-  //       'Bcc' => $bcc,
-  //     ];
+
+/* Load user */
+$user_data = User::load($proposal_data->uid);
+
+if (!$user_data) {
+  \Drupal::messenger()->addError('User not found.');
+  return;
+}
+
+/* To email */
+$email_to = $user_data->getEmail();
+
+if (empty($email_to)) {
+  \Drupal::messenger()->addError('User email is empty.');
+  return;
+}
+
+/* Config */
+$config = \Drupal::config('lab_migration.settings');
+
+$from = $config->get('lab_migration_from_email');
+$bcc  = $config->get('lab_migration_emails');
+$cc   = $config->get('lab_migration_cc_emails');
+
+/* Mandatory fallback */
+if (empty($from)) {
+  $from = \Drupal::config('system.site')->get('mail');
+}
+
+/* Build params */
+$params = [
+  'proposal_id' => $proposal_id,
+  'user_id' => $proposal_data->uid,
+  'headers' => [
+    'Cc' => $cc,
+    'Bcc' => $bcc,
+  ],
+];
+
+/* Language */
+$langcode = $user_data->getPreferredLangcode() ?: 'en';
+
+/* Send mail */
+$mailManager = \Drupal::service('plugin.manager.mail');
+
+$result = $mailManager->mail(
+  'lab_migration',
+  'proposal_completed',
+  $email_to,
+  $langcode,
+  $params,
+  $from,
+  TRUE
+);
+
+/* Debug */
+\Drupal::logger('lab_migration')->notice('<pre>@data</pre>', [
+  '@data' => print_r($result, TRUE),
+]);
+
+if (empty($result['result'])) {
+  \Drupal::messenger()->addError('Mail sending failed.');
+}
+else {
+  \Drupal::messenger()->addStatus('Email sent successfully.');
+}
+
+
+
       // if (!drupal_mail('lab_migration', 'proposal_completed', $email_to, language_default(), $param, $from, TRUE)) {
       //   \Drupal::messenger()->addmessage('Error sending email message.', 'error');
       // }
@@ -349,4 +404,3 @@ $response->send();
   }
 
 }
-?>

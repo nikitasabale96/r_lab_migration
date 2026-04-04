@@ -61,13 +61,13 @@ $certi_id = (int) $route_match->getParameter('certi_id');
         $form['name'] = [
           '#type' => 'textfield',
           '#title' => t('Name of Proposer'),
-          '#maxlength' => 50,
+          // '#maxlength' => 50,
           '#default_value' => $details_list->name,
         ];
         $form['email_id'] = [
           '#type' => 'textfield',
           '#title' => t('Email'),
-          '#size' => 50,
+          // '#size' => 50,
           '#default_value' => $details_list->email_id,
         ];
         $form['institute_name'] = [

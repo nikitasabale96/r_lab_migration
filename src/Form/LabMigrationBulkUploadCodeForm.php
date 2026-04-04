@@ -93,13 +93,13 @@ $response->send();
       '#title' => t('Title of the Experiment'),
       '#options' => $experiment_rows,
       '#multiple' => FALSE,
-      '#size' => 1,
+      // '#size' => 1,
       '#required' => TRUE,
     ];
     $form['code_number'] = [
       '#type' => 'textfield',
       '#title' => t('Code No'),
-      '#size' => 5,
+      // '#size' => 5,
       '#maxlength' => 10,
       '#description' => t(""),
       '#required' => TRUE,
@@ -107,7 +107,7 @@ $response->send();
     $form['code_caption'] = [
       '#type' => 'textfield',
       '#title' => t('Caption'),
-      '#size' => 40,
+      // '#size' => 40,
       '#maxlength' => 255,
       '#description' => t(''),
       '#required' => TRUE,
@@ -127,7 +127,7 @@ $response->send();
     $form['sourcefile']['sourcefile1'] = [
       '#type' => 'file',
       '#title' => t('Upload main or source file'),
-      '#size' => 48,
+      // '#size' => 48,
       '#description' => t('Separate filenames with underscore. No spaces or any special characters allowed in filename.') . '<br />' . t('Allowed file extensions : ') . $config->get('lab_migration_source_extensions', ''),
     ];
     $form['dep_files'] = [
@@ -178,13 +178,13 @@ $response->send();
     $form['result']['result1'] = [
       '#type' => 'file',
       '#title' => t('Upload result file'),
-      '#size' => 48,
+      // '#size' => 48,
       '#description' => t('Separate filenames with underscore. No spaces or any special characters allowed in filename.') . '<br />' . t('Allowed file extensions : ') . $config->get('lab_migration_result_extensions', ''),
     ];
     $form['result']['result2'] = [
       '#type' => 'file',
       '#title' => t('Upload result file'),
-      '#size' => 48,
+      // '#size' => 48,
       '#description' => t('Separate filenames with underscore. No spaces or any special characters allowed in filename.') . '<br />' . t('Allowed file extensions : ') . $config->get('lab_migration_result_extensions', ''),
     ];
     $form['xcos'] = [
@@ -196,13 +196,13 @@ $response->send();
     $form['xcos']['xcos1'] = [
       '#type' => 'file',
       '#title' => t('Upload xcos file'),
-      '#size' => 48,
+      // '#size' => 48,
       '#description' => t('Separate filenames with underscore. No spaces or any special characters allowed in filename.') . '<br />' . t('Allowed file extensions : ') . $config->get('lab_migration_xcos_extensions', ''),
     ];
     $form['xcos']['xcos2'] = [
       '#type' => 'file',
       '#title' => t('Upload xcos file'),
-      '#size' => 48,
+      // '#size' => 48,
       '#description' => t('Separate filenames with underscore. No spaces or any special characters allowed in filename.') . '<br />' . t('Allowed file extensions : ') . $config->get('lab_migration_xcos_extensions', ''),
     ];
     
@@ -451,26 +451,30 @@ $response->send();
     }
     add_message('Solution uploaded successfully.', 'status');
     /* sending email */
-    $email_to = $user->mail;
-    $from = $config->get('lab_migration_from_email', '');
-    $bcc = $config->get('lab_migration_emails', '');
-    $cc = $config->get('lab_migration_cc_emails', '');
+        /* sending email */
+     $user_data = \Drupal::entityTypeManager()->getStorage('user')->load($proposal_data->uid);
+$email_to = $user_data->getEmail();
+    $from = \Drupal::config('lab_migration.settings')->get('lab_migration_from_email');
+$bcc = \Drupal::config('lab_migration.settings')->get('lab_migration_emails');
+$cc = \Drupal::config('lab_migration.settings')->get('lab_migration_cc_emails');
+
     $param['solution_uploaded']['solution_id'] = $solution_id;
     $param['solution_uploaded']['user_id'] = $user->uid;
-    $param['solution_uploaded']['headers'] = [
-      'From' => $from,
-      'MIME-Version' => '1.0',
-      'Content-Type' => 'text/plain; charset=UTF-8; format=flowed; delsp=yes',
-      'Content-Transfer-Encoding' => '8Bit',
-      'X-Mailer' => 'Drupal',
-      'Cc' => $cc,
-      'Bcc' => $bcc,
-    ];
-    if (!drupal_mail('lab_migration', 'solution_uploaded', $email_to, language_default(), $param, $from, TRUE)) {
-      add_message('Error sending email message.', 'error');
-    }
-    RedirectResponse('lab-migration/code-approval/bulk/');
+    $param['solution_uploaded']['headers'] = [  'From' => $from,
+          'MIME-Version' => '1.0',
+          'Content-Type' => 'text/plain; charset=UTF-8; format=flowed; delsp=yes',
+          'Content-Transfer-Encoding' => '8Bit',
+          'X-Mailer' => 'Drupal',
+          'Cc' => $cc,
+          'Bcc' => $bcc,
+];
+
+  $langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
+      $mail_manager = \Drupal::service('plugin.manager.mail');
+  if (!\Drupal::service('plugin.manager.mail')->mail('lab_migration', 'proposal_uploaded', $email_to, 'en', $params, $form, TRUE));
+  { \Drupal::messenger()->addMessage(' sending email message.');
   }
 
+  }
 }
 ?>
